@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app      # mount for rapid dev
+      - smartserve-data:/app/smartserve_data
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - smartnet
+
+  # Optional: if you want to serve frontend via container
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   networks:
+  #     - smartnet
+
+volumes:
+  smartserve-data:
+
+networks:
+  smartnet:
+    driver: bridge
