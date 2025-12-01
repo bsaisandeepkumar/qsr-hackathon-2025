@@ -1,4 +1,6 @@
 # recommender/vector_recommender.py
+from logging_config.logger import get_logger
+reclog = get_logger("recommender")
 
 from typing import List, Dict, Any
 from .vector_index import build_index, search_similar_by_text
