@@ -1,8 +1,10 @@
-fastapi==0.95.2
+fastapi==0.110.0
 uvicorn[standard]==0.22.0
-pydantic==2.5.1
-sqlalchemy==2.0.22
+pydantic==2.6.0
 python-multipart==0.0.6
-python-dotenv==1.0.0
-# optional for real CV inference (install only if you want to run real YOLO inference)
-ultralytics==8.1.1  # OPTIONAL: only install if you have GPU/CPU capacity and want real CV
+sqlalchemy==2.0.25
+python-dotenv==1.0.1
+
+# OPTIONAL — Only install if you want real YOLO CV detection
+# comment it out if you don't want slow install
+# ultralytics==8.2.0
