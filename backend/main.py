@@ -1,4 +1,11 @@
 # main.py
+from logging_config.logger import init_logging, get_logger, CorrelationIdMiddleware
+
+# initialize logging
+init_logging()
+log = get_logger("backend")
+
+
 import os
 import asyncio
 from datetime import datetime
@@ -45,6 +52,8 @@ def init_db():
     conn.close()
 
 init_db()
+
+app.add_middleware(CorrelationIdMiddleware)
 
 app = FastAPI(title="SmartServe Backend (Hackathon Demo)")
 
