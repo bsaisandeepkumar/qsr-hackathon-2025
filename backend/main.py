@@ -115,7 +115,7 @@ def set_ticket_status(ticket_id: int, status: str):
 async def get_menu():
     return MENU
 
-from recommender.engine import get_recommendations
+from recommender.vector_recommender import get_recommendations_vector
 
 @app.post("/recommend")
 async def recommend(req: RecommendRequest):
@@ -125,13 +125,14 @@ async def recommend(req: RecommendRequest):
         if ticket:
             context_items = ticket["items"]
 
-    recs = get_recommendations(
+    # Use vector recommender
+    recs = get_recommendations_vector(
         user=req.user,
         profile=req.profile,
         timestamp=req.time,
-        context_ticket_items=context_items
+        context_ticket_items=context_items,
+        top_k=3
     )
-
     return {"recommendations": recs}
 
 @app.post("/order")
