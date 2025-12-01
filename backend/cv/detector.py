@@ -1,4 +1,6 @@
 # cv/detector.py
+from logging_config.logger import get_logger
+cvlog = get_logger("cv")
 
 import os
 import cv2
