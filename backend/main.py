@@ -166,74 +166,44 @@ def write_verification(ticket_id: int, result: Dict[str, Any]):
     with open(vfile, "w") as f:
         json.dump(result, f)
 
+from cv.detector import detect_items
+
 @app.post("/verify")
-async def verify_ticket(ticket_id: int, method: Optional[str] = "mock", sample_hint: Optional[str] = None, file: Optional[UploadFile] = File(None)):
-    """
-    Accepts either:
-    - multipart upload (image) -> run model if available, else mock
-    - query params sample_hint to trigger deterministic mocks for demo (e.g., sample_hint=fries_missing)
-    """
-    # sanity check ticket exists
+async def verify(ticket_id: int, sample_hint: str = None):
+    # Fetch order/ticket from your in-memory DB or SQLite
     ticket = get_ticket(ticket_id)
     if not ticket:
-        raise HTTPException(status_code=404, detail="Ticket not found")
+        return {"status": "error", "msg": "ticket not found"}
 
-    detected_items = []
-    if file and YOLO_AVAILABLE:
-        # run YOLO inference
-        contents = await file.read()
-        # write to temp file
-        tmp_path = f"/tmp/verify_{ticket_id}.jpg"
-        with open(tmp_path, "wb") as f:
-            f.write(contents)
-        results = YOLO_MODEL(tmp_path)
-        # results[0].boxes.cls gives classes numeric; for demo we map classes by names if model has names
-        names = results[0].names if hasattr(results[0], "names") else {}
-        for box in results[0].boxes:
-            cls = int(box.cls[0]) if hasattr(box, "cls") else None
-            if cls is not None and cls in names:
-                detected_items.append(names[cls])
-    else:
-        # Mock detection logic for demo
-        # If sample_hint provided we interpret accordingly
-        if sample_hint == "fries_missing":
-            detected_items = [it for it in ticket["items"] if it != "fries"]
-        elif sample_hint == "all_ok":
-            detected_items = ticket["items"]
-        else:
-            # if file provided but no YOLO, use filename cues
-            if file:
-                fname = file.filename.lower()
-                for key in ["fries", "burger", "cola", "salad", "soup"]:
-                    if key in fname:
-                        detected_items.append(key)
-                if not detected_items:
-                    # fallback: everything except fries
-                    detected_items = [it for it in ticket["items"] if it != "fries"]
-            else:
-                # no file: simulate missing fries 50% of time
-                if "fries" in ticket["items"]:
-                    # simple deterministic simulation: if ticket id odd -> missing fries
-                    if ticket_id % 2 == 1:
-                        detected_items = [it for it in ticket["items"] if it != "fries"]
-                    else:
-                        detected_items = ticket["items"]
-                else:
-                    detected_items = ticket["items"]
+    # For demo, use a placeholder image
+    # (You can replace with a real uploaded image in the future)
+    img_path = "cv/sample.jpg"
 
-    # compare expected vs detected
-    expected = set(ticket["items"])
-    detected_set = set(detected_items)
-    missing = list(expected - detected_set)
-    status = "ok" if len(missing) == 0 else "mismatch"
-    verification_result = {"status": status, "missing": missing, "detected": list(detected_set)}
-    # persist verification result to file so KDS endpoint can read it
-    write_verification(ticket_id, verification_result)
+    # Run detection (YOLO > SSD > Mock)
+    detected = detect_items(img_path, sample_hint)
 
-    # if mismatch, set ticket to 'held' for demo
-    if status == "mismatch":
-        set_ticket_status(ticket_id, "held")
-    else:
-        set_ticket_status(ticket_id, "ready")
+    expected = ticket["items"]
 
-    return {"ticketId": ticket_id, "verification": verification_result}
+    missing = [i for i in expected if i not in detected]
+    extra = [d for d in detected if d not in expected]
+
+    if not missing and not extra:
+        ticket["status"] = "verified"
+        return {
+            "status": "ok",
+            "verified": True,
+            "expected": expected,
+            "detected": detected
+        }
+
+    ticket["status"] = "mismatch"
+    ticket["issues"] = {"missing": missing, "extra": extra}
+
+    return {
+        "status": "mismatch",
+        "verified": False,
+        "expected": expected,
+        "detected": detected,
+        "missing": missing,
+        "extra": extra
+    }
