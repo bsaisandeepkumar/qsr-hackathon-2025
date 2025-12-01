@@ -2,7 +2,6 @@ fastapi==0.95.2
 uvicorn[standard]==0.22.0
 pydantic==2.5.1
 sqlalchemy==2.0.22
-databases==0.7.2
 python-multipart==0.0.6
 python-dotenv==1.0.0
 # optional for real CV inference (install only if you want to run real YOLO inference)
