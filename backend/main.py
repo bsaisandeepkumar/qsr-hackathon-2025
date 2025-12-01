@@ -115,62 +115,22 @@ def set_ticket_status(ticket_id: int, status: str):
 async def get_menu():
     return MENU
 
+from recommender.engine import get_recommendations
+
 @app.post("/recommend")
 async def recommend(req: RecommendRequest):
-    """
-    Simple rule-based recommender for demo:
-    - If profile == 'veg' -> recommend veg items first
-    - If time is lunch -> recommend mains + side
-    - If sample_hint or ticketId present, include 'fries' as upsell for burger
-    """
-    now = datetime.utcnow()
-    recs = []
-
-    # parse time if provided
-    if req.time:
-        try:
-            t = datetime.fromisoformat(req.time)
-            hour = t.hour
-        except Exception:
-            hour = now.hour
-    else:
-        hour = now.hour
-
-    inventory = {m['id']: True for m in MENU}  # simple availability map - all available
-
-    # candidate scoring
-    scores = {}
-    for item in MENU:
-        score = 0
-        # basic rules
-        if req.profile == "veg" and "veg" in item.get("tags", []):
-            score += 10
-        if 11 <= hour <= 14 and "main" in item.get("tags", []):
-            score += 6
-        if "hot" in item.get("tags", []):
-            score += 2
-        # small randomization-ish using id hash
-        score += (sum(ord(c) for c in item['id']) % 3)
-        scores[item['id']] = score
-
-    # if ticket hint - upsell fries if burger in ticket
+    context_items = []
     if req.ticketId:
         ticket = get_ticket(req.ticketId)
-        if ticket and "burger" in ticket["items"] and inventory.get("fries"):
-            # ensure fries recommended prominently
-            scores["fries"] += 12
+        if ticket:
+            context_items = ticket["items"]
 
-    # sort and pick top 3
-    sorted_items = sorted(MENU, key=lambda it: scores[it['id']], reverse=True)
-    recs = []
-    reasons_map = {
-        "fries": "Popular side",
-        "cola": "Complements drinks",
-        "salad": "Light option",
-        "burger": "Frequently ordered"
-    }
-    for it in sorted_items[:3]:
-        recs.append({"id": it["id"], "name": it["name"], "reason": reasons_map.get(it["id"], "Recommended")})
+    recs = get_recommendations(
+        user=req.user,
+        profile=req.profile,
+        timestamp=req.time,
+        context_ticket_items=context_items
+    )
 
     return {"recommendations": recs}
 
