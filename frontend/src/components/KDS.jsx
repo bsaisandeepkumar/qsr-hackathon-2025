@@ -9,7 +9,7 @@ export default function KDS({ ticketId }) {
 
     async function fetchStatus() {
       try {
-        const res = await fetch(`/kds/${ticketId}`)
+        const res = await fetch(`${config.API_BASE_URL}/kds/${ticketId}`)
         const data = await res.json()
         if (mounted) setStatus(data)
       } catch (e) {
