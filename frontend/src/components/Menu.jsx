@@ -39,7 +39,7 @@ export default function Menu({ user, onTicketCreated }) {
   }, [selectedCategory, menu]);
 
   // Cart actions
-  const addToCart = (item) => => {
+  const addToCart = (item) => {
   const updated = [...cart, item];
   setCart(updated);
   onCartUpdated(updated);   // send to App
