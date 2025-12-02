@@ -5,23 +5,20 @@ import Register from "./components/Register";
 import Menu from "./components/Menu";
 import Recommendations from "./components/Recommendations";
 import KDS from "./components/KDS";
+import CartPanel from "./components/CartPanel"; // ⬅ Add this import
 
 export default function App() {
-  const [user, setUser] = useState(null); // {phone, profile, name}
+  const [user, setUser] = useState(null);
   const [view, setView] = useState("kiosk");
   const [currentTicket, setCurrentTicket] = useState(null);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
-    if (stored) {
-      setUser(JSON.parse(stored));
-    }
+    if (stored) setUser(JSON.parse(stored));
   }, []);
 
-  // login result handler
   const onLoginSuccess = (payload) => {
-    // payload may be {phone, newUser:true} or full user object
     if (payload.newUser) {
       setUser({ phone: payload.phone, newUser: true });
     } else {
@@ -33,7 +30,6 @@ export default function App() {
     setUser(userObj);
   };
 
-  // menu's onTicketCreated should now be (ticket, profile)
   return (
     <>
       {!user ? (
@@ -43,33 +39,47 @@ export default function App() {
       ) : (
         <div className="min-h-screen bg-gray-50 p-6">
           <header className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">SmartServe ({user.phone})</h1>
-            <div>
-              <button onClick={() => { localStorage.removeItem("user"); setUser(null); }} className="px-3 py-1 bg-red-500 text-white rounded">Logout</button>
-            </div>
+            <h1 className="text-2xl font-semibold">
+              SmartServe ({user.name || user.phone})
+            </h1>
+            <button
+              onClick={() => {
+                localStorage.removeItem("user");
+                setUser(null);
+              }}
+              className="px-3 py-1 bg-red-500 text-white rounded"
+            >
+              Logout
+            </button>
           </header>
 
           {view === "kiosk" && (
             <main className="grid grid-cols-3 gap-6">
+              {/* LEFT SIDE → Menu */}
               <div className="col-span-2">
-                <Menu 
-                onTicketCreated={(t) => setCurrentTicket(t)}
-                onCartUpdated={(c) => setCart(c)}
+                <Menu
+                  onTicketCreated={setCurrentTicket}
+                  onCartUpdated={setCart}
+                />
+
+                {/* NEW: Cart moved ABOVE recommendations */}
+                <div className="mt-4">
+                  <CartPanel cart={cart} setCart={setCart} />
+                </div>
+              </div>
+
+              {/* RIGHT SIDE → Recommendations */}
+              <div>
+                <Recommendations
+                  ticketId={currentTicket?.id}
+                  user={user}
+                  cart={cart}
                 />
               </div>
-              <div>
-<Recommendations 
-  ticketId={currentTicket?.id}
-  user={JSON.parse(localStorage.getItem("user") || "null")}
-  cart={cart}
-/>
-    </div>
             </main>
           )}
 
-          {view === "kds" && (
-            <KDS ticketId={currentTicket?.id} />
-          )}
+          {view === "kds" && <KDS ticketId={currentTicket?.id} />}
         </div>
       )}
     </>
