@@ -54,8 +54,11 @@ export default function App() {
                 <Menu user={user} onTicketCreated={(ticket) => setCurrentTicket(ticket)} />
               </div>
               <div>
-                <Recommendations user={user} ticketId={currentTicket?.id} />
-              </div>
+      <Recommendations 
+        ticketId={currentTicket?.id}
+        user={JSON.parse(localStorage.getItem("user") || "null")}
+      />
+    </div>
             </main>
           )}
 
