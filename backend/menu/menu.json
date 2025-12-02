@@ -1,0 +1,10 @@
+[
+  { "id": "burger", "name": "Classic Burger", "price": 6.99, "tags": ["hot"], "image": "/images/burger.jpg" },
+  { "id": "fries", "name": "Fries", "price": 2.49, "tags": ["side"], "image": "/images/fries.jpg" },
+  { "id": "cola", "name": "Soft Drink", "price": 1.99, "tags": ["drink"], "image": "/images/cola.jpg" },
+  { "id": "salad", "name": "Green Salad", "price": 4.99, "tags": ["veg"], "image": "/images/salad.jpg" },
+
+  { "id": "wrap", "name": "Chicken Wrap", "price": 5.99, "tags": ["main"], "image": "/images/wrap.jpg" },
+  { "id": "icecream", "name": "Vanilla Ice Cream", "price": 2.99, "tags": ["dessert"], "image": "/images/icecream.jpg" },
+  { "id": "coffee", "name": "Hot Coffee", "price": 1.49, "tags": ["drink", "hot"], "image": "/images/coffee.jpg" }
+]
