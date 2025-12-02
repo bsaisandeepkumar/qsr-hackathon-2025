@@ -59,13 +59,15 @@ export default function Menu({ onTicketCreated }) {
     }
   };
 
-  return (
+ return (
+  <>
     <div className="flex items-center justify-between mb-4">
-  <h2 className="text-xl font-medium">
-    Welcome, {user?.name || user?.phone || "Guest"}
+      <h2 className="text-xl font-medium">
+        Welcome, {user?.name || user?.phone || "Guest"}
       </h2>
-      </div>
+    </div>
 
+    <div className="bg-white p-4 rounded shadow">
       <div className="grid grid-cols-2 gap-3">
         {menu.map((item) => (
           <div key={item.id} className="p-3 border rounded flex flex-col">
@@ -114,5 +116,5 @@ export default function Menu({ onTicketCreated }) {
         </div>
       </div>
     </div>
-  );
-}
+  </>
+);
