@@ -43,13 +43,13 @@ export default function Register({ phone, onRegistered }) {
         onChange={(e) => setName(e.target.value)}
       />
 
-      <label className="block mb-2">Profile</label>
-      <select className="border p-2 w-full mb-4" value={profile} onChange={(e) => setProfile(e.target.value)}>
-        <option value="in_store">In-Store</option>
-        <option value="returning">Returning</option>
-        <option value="health_focus">Health Focus</option>
-        <option value="kid_friendly">Kid Friendly</option>
-      </select>
+  //    <label className="block mb-2">Profile</label>
+  //    <select className="border p-2 w-full mb-4" value={profile} onChange={(e) => setProfile(e.target.value)}>
+  //      <option value="in_store">In-Store</option>
+  //      <option value="returning">Returning</option>
+  //      <option value="health_focus">Health Focus</option>
+  //      <option value="kid_friendly">Kid Friendly</option>
+  //    </select>
 
       <button onClick={submit} className="bg-green-600 text-white w-full py-2 rounded">
         Create account
