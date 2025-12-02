@@ -13,7 +13,7 @@ function getCorrelationId() {
 // Sends logs to backend for central storage
 export async function sendBackendLog(level, message, extra = {}) {
   try {
-    await fetch("http://localhost:8000/fe-log", {
+    await fetch("${config.API_BASE_URL}/fe-log", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
