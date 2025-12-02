@@ -105,4 +105,13 @@ export default function Menu({ onTicketCreated }) {
         <div className="mt-3 flex justify-end">
           <button
             onClick={placeOrder}
-            className="px-4
+            className="px-4 py-2 bg-green-600 text-white rounded"
+            disabled={cart.length === 0}
+          >
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
