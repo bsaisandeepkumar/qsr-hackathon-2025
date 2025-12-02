@@ -1,10 +1,69 @@
 [
-  { "id": "burger", "name": "Classic Burger", "price": 6.99, "tags": ["hot"], "image": "/images/burger.jpg" },
-  { "id": "fries", "name": "Fries", "price": 2.49, "tags": ["side"], "image": "/images/fries.jpg" },
-  { "id": "cola", "name": "Soft Drink", "price": 1.99, "tags": ["drink"], "image": "/images/cola.jpg" },
-  { "id": "salad", "name": "Green Salad", "price": 4.99, "tags": ["veg"], "image": "/images/salad.jpg" },
+  {
+    "id": "classic_burger",
+    "name": "Classic Burger",
+    "price": 6.99,
+    "tags": ["main", "hot", "popular"],
+    "image": "https://images.unsplash.com/photo-1550547660-d9450f859349"
+  },
+  {
+    "id": "cheese_burger",
+    "name": "Cheese Burger",
+    "price": 7.49,
+    "tags": ["main", "hot", "kids"],
+    "image": "https://images.unsplash.com/photo-1607016809440-7a05e55c33de"
+  },
+  {
+    "id": "chicken_burger",
+    "name": "Grilled Chicken Burger",
+    "price": 7.99,
+    "tags": ["main", "hot", "healthy"],
+    "image": "https://images.unsplash.com/photo-1626178802833-9b5c45db26df"
+  },
+  {
+    "id": "veggie_burger",
+    "name": "Veggie Burger",
+    "price": 6.79,
+    "tags": ["main", "veg", "healthy"],
+    "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468"
+  },
 
-  { "id": "wrap", "name": "Chicken Wrap", "price": 5.99, "tags": ["main"], "image": "/images/wrap.jpg" },
-  { "id": "icecream", "name": "Vanilla Ice Cream", "price": 2.99, "tags": ["dessert"], "image": "/images/icecream.jpg" },
-  { "id": "coffee", "name": "Hot Coffee", "price": 1.49, "tags": ["drink", "hot"], "image": "/images/coffee.jpg" }
-]
+  {
+    "id": "fries",
+    "name": "Fries",
+    "price": 2.49,
+    "tags": ["side", "popular"],
+    "image": "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5"
+  },
+  {
+    "id": "onion_rings",
+    "name": "Onion Rings",
+    "price": 3.49,
+    "tags": ["side"],
+    "image": "https://images.unsplash.com/photo-1594007654729-407eedc4be65"
+  },
+  {
+    "id": "mozzarella_sticks",
+    "name": "Mozzarella Sticks",
+    "price": 4.49,
+    "tags": ["side"],
+    "image": "https://images.unsplash.com/photo-1589307003460-5f10943ceb66"
+  },
+
+  {
+    "id": "cola",
+    "name": "Soft Drink",
+    "price": 1.99,
+    "tags": ["drink", "popular"],
+    "image": "https://images.unsplash.com/photo-1603398938378-e54eab446dde"
+  },
+  {
+    "id": "iced_tea",
+    "name": "Iced Tea",
+    "price": 2.29,
+    "tags": ["drink"],
+    "image": "https://images.unsplash.com/photo-1497534446932-c925b458314e"
+  },
+  {
+    "id": "milkshake",
+    "name
