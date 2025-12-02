@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// frontend/src/App.jsx
+import React, { useEffect, useState } from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Menu from "./components/Menu";
@@ -6,31 +7,63 @@ import Recommendations from "./components/Recommendations";
 import KDS from "./components/KDS";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // {phone, profile, name}
+  const [view, setView] = useState("kiosk");
+  const [currentTicket, setCurrentTicket] = useState(null);
 
-  if (!user) {
-    return <Login onLoginSuccess={setUser} />;
-  }
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
+  }, []);
 
-  if (user.newUser) {
-    return <Register phone={user.phone} onRegistered={setUser} />;
-  }
+  // login result handler
+  const onLoginSuccess = (payload) => {
+    // payload may be {phone, newUser:true} or full user object
+    if (payload.newUser) {
+      setUser({ phone: payload.phone, newUser: true });
+    } else {
+      setUser(payload);
+    }
+  };
 
+  const onRegistered = (userObj) => {
+    setUser(userObj);
+  };
+
+  // menu's onTicketCreated should now be (ticket, profile)
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <header className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">
-          SmartServe — Welcome {user.phone}
-        </h1>
-      </header>
+    <>
+      {!user ? (
+        <Login onLoginSuccess={onLoginSuccess} />
+      ) : user.newUser ? (
+        <Register phone={user.phone} onRegistered={onRegistered} />
+      ) : (
+        <div className="min-h-screen bg-gray-50 p-6">
+          <header className="mb-6 flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">SmartServe — Demo ({user.phone})</h1>
+            <div>
+              <button onClick={() => { localStorage.removeItem("user"); setUser(null); }} className="px-3 py-1 bg-red-500 text-white rounded">Logout</button>
+            </div>
+          </header>
 
-      <main className="grid grid-cols-3 gap-6">
-        <div className="col-span-2">
-          <Menu user={user} />
+          {view === "kiosk" && (
+            <main className="grid grid-cols-3 gap-6">
+              <div className="col-span-2">
+                <Menu user={user} onTicketCreated={(ticket) => setCurrentTicket(ticket)} />
+              </div>
+              <div>
+                <Recommendations user={user} ticketId={currentTicket?.id} />
+              </div>
+            </main>
+          )}
+
+          {view === "kds" && (
+            <KDS ticketId={currentTicket?.id} />
+          )}
         </div>
-
-        <Recommendations user={user} />
-      </main>
-    </div>
+      )}
+    </>
   );
 }
