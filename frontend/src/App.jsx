@@ -51,7 +51,10 @@ export default function App() {
           {view === "kiosk" && (
             <main className="grid grid-cols-3 gap-6">
               <div className="col-span-2">
-                <Menu user={user} onTicketCreated={(ticket) => setCurrentTicket(ticket)} />
+                <Menu 
+  onTicketCreated={(t) => setCurrentTicket(t)}
+  onCartUpdated={(c) => setCart(c)}
+/>
               </div>
               <div>
 <Recommendations 
