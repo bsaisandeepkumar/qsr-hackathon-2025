@@ -56,7 +56,7 @@ const placeOrder = async () => {
 }
 
   return (
-//    <div className="bg-white p-4 rounded shadow">
+    <div className="bg-white p-4 rounded shadow">
 //      <div className="flex items-center justify-between mb-4">
 //        <h2 className="text-xl font-medium">Menu</h2>
 //        <div>
