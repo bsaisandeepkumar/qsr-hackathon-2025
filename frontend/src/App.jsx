@@ -6,6 +6,8 @@ import KDS from './components/KDS'
 export default function App() {
   const [view, setView] = useState('kiosk') // kiosk | kds
   const [currentTicket, setCurrentTicket] = useState(null)
+  const [currentProfile, setCurrentProfile] = useState("in_store")
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -30,10 +32,13 @@ export default function App() {
       {view === 'kiosk' && (
         <main className="grid grid-cols-3 gap-6">
           <div className="col-span-2">
-            <Menu onTicketCreated={(ticket) => setCurrentTicket(ticket)} />
+           <Menu onTicketCreated={(ticket, profile) => {
+    setCurrentTicket(ticket);
+    setCurrentProfile(profile);
+}} />
           </div>
           <div>
-            <Recommendations ticketId={currentTicket?.id} />
+            <Recommendations ticketId={currentTicket?.id} profile={currentProfile} />
           </div>
         </main>
       )}
