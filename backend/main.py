@@ -310,3 +310,34 @@ async def verify(
     }
 
     return result
+from db import get_conn
+
+@app.post("/create-account")
+async def create_account(payload: dict, request: Request):
+    phone = payload.get("phone")
+    name = payload.get("name")
+    profile = payload.get("profile")
+
+    if not phone:
+        return {"error": "Phone number is required"}
+
+    conn = get_conn()
+    cur = conn.cursor()
+
+    # Check if user already exists
+    cur.execute("SELECT id FROM users WHERE phone=?", (phone,))
+    exists = cur.fetchone()
+
+    if exists:
+        conn.close()
+        return {"status": "exists", "phone": phone}
+
+    # Insert new user
+    cur.execute(
+        "INSERT INTO users (phone, name, profile) VALUES (?, ?, ?)",
+        (phone, name, profile)
+    )
+    conn.commit()
+    conn.close()
+
+    return {"status": "created", "phone": phone}
