@@ -39,9 +39,17 @@ export default function Menu({ user, onTicketCreated }) {
   }, [selectedCategory, menu]);
 
   // Cart actions
-  const addToCart = (item) => setCart((prev) => [...prev, item]);
+  const addToCart = (item) => => {
+  const updated = [...cart, item];
+  setCart(updated);
+  onCartUpdated(updated);   // send to App
+};
   const removeFromCart = (index) =>
-    setCart((prev) => prev.filter((_, i) => i !== index));
+    {
+  const updated = cart.filter((_, i) => i !== index);
+  setCart(updated);
+  onCartUpdated(updated);   // send to App
+};
 
   const placeOrder = async () => {
     if (cart.length === 0) {
