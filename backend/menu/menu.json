@@ -66,4 +66,90 @@
   },
   {
     "id": "milkshake",
-    "name
+    "name": "Vanilla Milkshake",
+    "price": 3.99,
+    "tags": ["drink", "dessert", "kids"],
+    "image": "https://images.unsplash.com/photo-1521302080334-4bebac2766c1"
+  },
+
+  {
+    "id": "green_salad",
+    "name": "Green Salad",
+    "price": 4.99,
+    "tags": ["veg", "healthy", "side"],
+    "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3a9d2"
+  },
+  {
+    "id": "veggie_bowl",
+    "name": "Veggie Bowl",
+    "price": 6.49,
+    "tags": ["veg", "healthy", "main"],
+    "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d"
+  },
+  {
+    "id": "tomato_soup",
+    "name": "Tomato Soup",
+    "price": 3.49,
+    "tags": ["veg", "hot"],
+    "image": "https://images.unsplash.com/photo-1543352634-7e4b05f0ad1d"
+  },
+
+  {
+    "id": "chicken_wings",
+    "name": "Chicken Wings",
+    "price": 5.99,
+    "tags": ["side", "spicy"],
+    "image": "https://images.unsplash.com/photo-1608032077018-c9a5a3bb88c6"
+  },
+  {
+    "id": "grilled_chicken",
+    "name": "Grilled Chicken Plate",
+    "price": 8.49,
+    "tags": ["main", "healthy"],
+    "image": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
+  },
+  {
+    "id": "chicken_popcorn",
+    "name": "Chicken Popcorn",
+    "price": 3.99,
+    "tags": ["side", "kids"],
+    "image": "https://images.unsplash.com/photo-1603048297172-23ccf60d35c3"
+  },
+
+  {
+    "id": "chocolate_cake",
+    "name": "Chocolate Cake",
+    "price": 3.99,
+    "tags": ["dessert", "popular"],
+    "image": "https://images.unsplash.com/photo-1599785209798-9dff44e3f8b5"
+  },
+  {
+    "id": "cookies",
+    "name": "Fresh Cookies",
+    "price": 2.29,
+    "tags": ["dessert", "kids"],
+    "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777"
+  },
+  {
+    "id": "ice_cream",
+    "name": "Ice Cream Cup",
+    "price": 2.49,
+    "tags": ["dessert", "kids"],
+    "image": "https://images.unsplash.com/photo-1505252972022-4e8d0f94a195"
+  },
+
+  {
+    "id": "tacos",
+    "name": "Beef Tacos",
+    "price": 5.49,
+    "tags": ["main", "spicy"],
+    "image": "https://images.unsplash.com/photo-1601924582971-dc4b57c18fff"
+  },
+  {
+    "id": "wrap",
+    "name": "Chicken Wrap",
+    "price": 5.99,
+    "tags": ["main", "healthy"],
+    "image": "https://images.unsplash.com/photo-1623428187969-5f57fe4a6df2"
+  }
+]
