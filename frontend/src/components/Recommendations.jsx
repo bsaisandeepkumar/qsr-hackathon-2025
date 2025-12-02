@@ -1,17 +1,22 @@
-import React, { useState } from "react"
-import config from "../config"
+import React, { useEffect, useState } from "react";
+import config from "../config";
 
-export default function Recommendations({ user, ticketId }) {
+export default function Recommendations({ ticketId, user }) {
   const [recs, setRecs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
- const getRecommendations = async () => {
+  const getRecommendations = async () => {
+    if (!user) return;
+
+    setLoading(true);
+
     try {
       const res = await fetch(`${config.API_BASE_URL}/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: user?.phone || "anonymous",
-          profile: user?.profile || "in_store",
+          user: user.phone,
+          profile: user.profile,
           ticketId: ticketId || null,
         }),
       });
@@ -21,32 +26,31 @@ export default function Recommendations({ user, ticketId }) {
     } catch (err) {
       console.error("Failed fetching recommendations", err);
     }
+
+    setLoading(false);
   };
 
+  // 🔥 Auto-load whenever user logs in or ticket changes
+  useEffect(() => {
+    getRecommendations();
+  }, [user, ticketId]);
+
   return (
-    <div className="bg-white rounded shadow p-4">
-      <h2 className="text-lg font-semibold mb-3">Suggestions</h2>
+    <div className="bg-white p-4 rounded shadow">
+      <h3 className="font-medium mb-2">Recommended for you</h3>
 
-      {/* Add the missing button here */}
-      <button
-        onClick={getRecommendations}
-        className="mb-4 px-3 py-2 bg-blue-600 text-white rounded w-full"
-      >
-        Get Recommendations
-      </button>
+      {loading && <p className="text-gray-500 text-sm">Loading recommendations...</p>}
 
-      {/* Render results */}
-      {recs.length > 0 ? (
-        <ul className="space-y-2">
-          {recs.map((r, idx) => (
-            <li key={idx} className="border p-2 rounded">
-              <strong>{r.name}</strong> — {r.reason}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-sm text-gray-500">No recommendations yet.</p>
+      {!loading && recs.length === 0 && (
+        <p className="text-gray-500 text-sm">No recommendations available</p>
       )}
+
+      {recs.map((r, i) => (
+        <div key={i} className="p-2 border rounded mb-2">
+          <div className="font-semibold">{r.name}</div>
+          <div className="text-sm text-gray-600">{r.reason}</div>
+        </div>
+      ))}
     </div>
   );
 }
