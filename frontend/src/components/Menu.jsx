@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import config from "../config"
 
 const MOCK_MENU = [
   { id: 'burger', name: 'Classic Burger', price: 6.99, tags: ['hot'] },
@@ -31,7 +32,7 @@ export default function Menu({ onTicketCreated }) {
     }
 
     try {
-      const res = await fetch('/order', {
+     const res = await fetch(`${config.API_BASE_URL}/order`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(payload)
