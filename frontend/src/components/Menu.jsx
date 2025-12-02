@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import config from "../config";
 
-export default function Menu({ user, onTicketCreated }) {
+export default function Menu({ user, onTicketCreated, onCartUpdated }) {
   const [menu, setMenu] = useState([]);
   const [filteredMenu, setFilteredMenu] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -29,7 +29,7 @@ export default function Menu({ user, onTicketCreated }) {
       });
   }, []);
 
-  // Handle category change
+  // Category filter logic
   useEffect(() => {
     if (selectedCategory === "all") {
       setFilteredMenu(menu);
@@ -40,22 +40,23 @@ export default function Menu({ user, onTicketCreated }) {
 
   // Cart actions
   const addToCart = (item) => {
-  const updated = [...cart, item];
-  setCart(updated);
-  onCartUpdated(updated);   // send to App
-};
-  const removeFromCart = (index) =>
-    {
-  const updated = cart.filter((_, i) => i !== index);
-  setCart(updated);
-  onCartUpdated(updated);   // send to App
-};
+    const updated = [...cart, item];
+    setCart(updated);
+    if (onCartUpdated) onCartUpdated(updated);
+  };
+
+  const removeFromCart = (index) => {
+    const updated = cart.filter((_, i) => i !== index);
+    setCart(updated);
+    if (onCartUpdated) onCartUpdated(updated);
+  };
 
   const placeOrder = async () => {
     if (cart.length === 0) {
       alert("Select at least one item");
       return;
     }
+
     const profileToUse = user?.profile || "in_store";
 
     try {
@@ -135,16 +136,16 @@ export default function Menu({ user, onTicketCreated }) {
         ))}
       </div>
 
- {/* Cart */}
+      {/* Cart */}
       <div className="mt-4">
-  <button
-    onClick={placeOrder}
-    className="px-4 py-2 bg-green-600 text-white rounded w-full"
-    disabled={cart.length === 0}
-  >
-    Place Order
-  </button>
-</div>
-
+        <button
+          onClick={placeOrder}
+          className="px-4 py-2 bg-green-600 text-white rounded w-full"
+          disabled={cart.length === 0}
+        >
+          Place Order
+        </button>
+      </div>
+    </div>
   );
 }
