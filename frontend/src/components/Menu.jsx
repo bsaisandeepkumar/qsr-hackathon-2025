@@ -8,10 +8,14 @@ const MOCK_MENU = [
   { id: "salad", name: "Green Salad", price: 4.99, tags: ["veg"] },
 ];
 
-export default function Menu({ onTicketCreated }) {
+export default function Menu({ onTicketCreated, onCartUpdated }) {
   const [menu, setMenu] = useState([]);
   const [cart, setCart] = useState([]);
 
+  useEffect(() => {
+  if (onCartUpdated) onCartUpdated(cart);
+}, [cart]);
+  
   // load user from localStorage
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
