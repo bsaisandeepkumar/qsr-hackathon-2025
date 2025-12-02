@@ -55,7 +55,6 @@ class LoginRequest(BaseModel):
 class RegisterRequest(BaseModel):
     phone: str
     name: Optional[str] = None
-    profile: Optional[str] = "in_store"
 
 # ---------------------------
 # Helpers (tickets)
@@ -64,8 +63,8 @@ def insert_ticket(profile: str, items: List[str]) -> Dict[str, Any]:
     conn = get_conn()
     cur = conn.cursor()
     created_at = datetime.utcnow().isoformat()
-    cur.execute("INSERT INTO tickets (created_at, profile, items, status) VALUES (?, ?, ?, ?)",
-                (created_at, profile, json.dumps(items), "created"))
+    cur.execute( "INSERT INTO users (phone, name, profile) VALUES (?, ?, ?)",
+    (phone, name, "in_store"),)
     ticket_id = cur.lastrowid
     conn.commit()
     conn.close()
@@ -130,7 +129,7 @@ async def auth_login(req: LoginRequest, request: Request):
 async def auth_register(req: RegisterRequest, request: Request):
     phone = req.phone.strip()
     name = req.name or None
-    profile = req.profile or "in_store"
+    profile = "in_store"   # default profile for all new accounts
 
     log.info(f"Register request phone={phone} profile={profile}", extra={"correlation_id": request.state.correlation_id})
 
@@ -141,7 +140,7 @@ async def auth_register(req: RegisterRequest, request: Request):
         conn.commit()
         conn.close()
         log.info(f"Registered user phone={phone}", extra={"correlation_id": request.state.correlation_id})
-        return {"status": "created", "phone": phone, "profile": profile}
+        return {"status": "created", "phone": phone, "profile": "in_store"}
     except sqlite3.IntegrityError:
         conn.close()
         log.warning(f"Register attempt for existing phone={phone}", extra={"correlation_id": request.state.correlation_id})
