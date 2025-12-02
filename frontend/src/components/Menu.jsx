@@ -56,18 +56,18 @@ const placeOrder = async () => {
 }
 
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-medium">Menu</h2>
-        <div>
-          <label className="mr-2 text-sm">Profile</label>
-          <select value={profile} onChange={(e)=>setProfile(e.target.value)} className="border rounded px-2 py-1">
-            <option value="returning">Returning</option>
-            <option value="new">New</option>
-            <option value="veg">Veg</option>
-          </select>
-        </div>
-      </div>
+//    <div className="bg-white p-4 rounded shadow">
+//      <div className="flex items-center justify-between mb-4">
+//        <h2 className="text-xl font-medium">Menu</h2>
+//        <div>
+//          <label className="mr-2 text-sm">Profile</label>
+//          <select value={profile} onChange={(e)=>setProfile(e.target.value)} className="border rounded px-2 py-1">
+//            <option value="returning">Returning</option>
+//            <option value="new">New</option>
+//            <option value="veg">Veg</option>
+//          </select>
+//        </div>
+//      </div>
 
       <div className="grid grid-cols-2 gap-3">
         {menu.map(item => (
