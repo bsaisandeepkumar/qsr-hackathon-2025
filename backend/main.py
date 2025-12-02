@@ -95,21 +95,21 @@ def set_ticket_status(ticket_id: int, status: str):
 async def get_menu(request: Request):
     # MENU is expected to be defined elsewhere or load from file; simple inline menu kept
     MENU = [
-        // BURGERS
+       # BURGERS
   { id: "classic_burger", name: "Classic Burger", price: 6.99, tags: ["burger", "beef"] },
   { id: "cheese_burger", name: "Cheese Burger", price: 7.49, tags: ["burger", "beef"] },
   { id: "double_burger", name: "Double Burger", price: 8.99, tags: ["burger", "beef"] },
   { id: "veggie_burger", name: "Veggie Burger", price: 6.49, tags: ["burger", "veg"] },
   { id: "spicy_chicken_burger", name: "Spicy Chicken Burger", price: 7.99, tags: ["burger", "chicken", "spicy"] },
 
-  // SIDES
+ # SIDES
   { id: "fries_small", name: "Small Fries", price: 2.49, tags: ["side"] },
   { id: "fries_large", name: "Large Fries", price: 3.49, tags: ["side"] },
   { id: "curly_fries", name: "Curly Fries", price: 3.99, tags: ["side"] },
   { id: "onion_rings", name: "Onion Rings", price: 3.99, tags: ["side"] },
   { id: "side_salad", name: "Side Salad", price: 3.49, tags: ["veg", "healthy", "side"] },
 
-  // DRINKS
+ # DRINKS
   { id: "cola_small", name: "Cola (Small)", price: 1.49, tags: ["drink"] },
   { id: "cola_large", name: "Cola (Large)", price: 2.49, tags: ["drink"] },
   { id: "orange_soda", name: "Orange Soda", price: 2.49, tags: ["drink"] },
@@ -119,24 +119,24 @@ async def get_menu(request: Request):
   { id: "milkshake_chocolate", name: "Chocolate Milkshake", price: 3.99, tags: ["drink", "dessert"] },
   { id: "milkshake_strawberry", name: "Strawberry Milkshake", price: 3.99, tags: ["drink", "dessert"] },
 
-  // CHICKEN ITEMS
+ # CHICKEN ITEMS
   { id: "chicken_nuggets_6", name: "Chicken Nuggets (6 pc)", price: 4.99, tags: ["chicken"] },
   { id: "chicken_nuggets_12", name: "Chicken Nuggets (12 pc)", price: 7.99, tags: ["chicken"] },
   { id: "crispy_chicken_strips", name: "Crispy Chicken Strips", price: 6.99, tags: ["chicken"] },
 
-  // HEALTHY ITEMS
+ # HEALTHY ITEMS
   { id: "greek_salad", name: "Greek Salad", price: 6.49, tags: ["veg", "healthy"] },
   { id: "chicken_salad", name: "Chicken Salad", price: 7.49, tags: ["healthy", "chicken"] },
   { id: "veggie_wrap", name: "Veggie Wrap", price: 5.99, tags: ["veg", "healthy"] },
   { id: "chicken_wrap", name: "Chicken Wrap", price: 6.99, tags: ["healthy", "chicken"] },
 
-  // KIDS MENU
+ # KIDS MENU
   { id: "kids_burger", name: "Kids Burger Meal", price: 4.99, tags: ["kids"] },
   { id: "kids_nuggets", name: "Kids Nuggets Meal", price: 4.99, tags: ["kids"] },
   { id: "apple_slices", name: "Apple Slices", price: 1.29, tags: ["kids", "healthy"] },
   { id: "juice_box", name: "Juice Box", price: 1.29, tags: ["kids", "drink"] },
 
-  // DESSERTS
+ # DESSERTS
   { id: "ice_cream", name: "Soft Serve Ice Cream", price: 1.99, tags: ["dessert"] },
   { id: "brownie", name: "Chocolate Brownie", price: 2.99, tags: ["dessert"] }
     ]
