@@ -116,5 +116,6 @@ export default function Menu({ onTicketCreated }) {
         </div>
       </div>
     </div>
-  </>
-)
+   </>
+  );
+}
