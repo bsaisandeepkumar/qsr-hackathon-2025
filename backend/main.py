@@ -97,9 +97,13 @@ def set_ticket_status(ticket_id: int, status: str):
 
 @app.get("/menu")
 async def get_menu():
-    menu = load_menu()
+  
+    def load_menu_json():
+    with open("menu.json", "r") as f:
+        return json.load(f)
+          menu = load_menu()
     log.info("Menu returned", extra={"correlation_id": getattr(request.state, "correlation_id", None)})
-    return menu
+    return load_menu_json()
 
 # ---------------------------
 # Auth: Login & Register
