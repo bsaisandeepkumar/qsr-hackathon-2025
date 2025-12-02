@@ -10,6 +10,7 @@ export default function App() {
   const [user, setUser] = useState(null); // {phone, profile, name}
   const [view, setView] = useState("kiosk");
   const [currentTicket, setCurrentTicket] = useState(null);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
@@ -52,9 +53,9 @@ export default function App() {
             <main className="grid grid-cols-3 gap-6">
               <div className="col-span-2">
                 <Menu 
-  onTicketCreated={(t) => setCurrentTicket(t)}
-  onCartUpdated={(c) => setCart(c)}
-/>
+                onTicketCreated={(t) => setCurrentTicket(t)}
+                onCartUpdated={(c) => setCart(c)}
+                />
               </div>
               <div>
 <Recommendations 
