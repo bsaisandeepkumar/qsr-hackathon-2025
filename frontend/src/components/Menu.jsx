@@ -1,54 +1,27 @@
+// frontend/src/components/Menu.jsx
 import React, { useEffect, useState } from "react";
 import config from "../config";
 
-export default function Menu({ user, onTicketCreated, onCartUpdated }) {
+export default function Menu({ onTicketCreated, onCartUpdated }) {
   const [menu, setMenu] = useState([]);
-  const [filteredMenu, setFilteredMenu] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [cart, setCart] = useState([]);
 
-  const CATEGORIES = [
-    { id: "all", label: "All" },
-    { id: "main", label: "Burgers & Mains" },
-    { id: "side", label: "Sides" },
-    { id: "drink", label: "Drinks" },
-    { id: "dessert", label: "Desserts" },
-    { id: "healthy", label: "Healthy" },
-    { id: "kids", label: "Kids" }
-  ];
-
+  // Load menu
   useEffect(() => {
     fetch(`${config.API_BASE_URL}/menu`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((data) => {
-        setMenu(data);
-        setFilteredMenu(data);
-      })
+      .then((r) => r.json())
+      .then(setMenu)
       .catch((err) => {
         console.error("Failed loading menu", err);
+        setMenu([]);
       });
   }, []);
 
-  // Category filter logic
-  useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredMenu(menu);
-      return;
-    }
-    setFilteredMenu(menu.filter((item) => item.tags.includes(selectedCategory)));
-  }, [selectedCategory, menu]);
-
-  // Cart actions
-  const addToCart = (item) => {
+  // --- CART ACTIONS ---
+  const add = (item) => {
     const updated = [...cart, item];
     setCart(updated);
-    if (onCartUpdated) onCartUpdated(updated);
-  };
-
-  const removeFromCart = (index) => {
-    const updated = cart.filter((_, i) => i !== index);
-    setCart(updated);
-    if (onCartUpdated) onCartUpdated(updated);
+    onCartUpdated(updated); // notify App.jsx
   };
 
   const placeOrder = async () => {
@@ -57,78 +30,49 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
       return;
     }
 
-    const profileToUse = user?.profile || "in_store";
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const profile = user?.profile || "in_store";
 
     try {
       const res = await fetch(`${config.API_BASE_URL}/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          profile: profileToUse,
-          items: cart
-        })
+          profile,
+          items: cart.map((c) => c.id),
+        }),
       });
 
       if (!res.ok) {
-        console.error("Order failed");
         alert("Order failed");
         return;
       }
 
       const data = await res.json();
       onTicketCreated(data);
+      setCart([]);
+      onCartUpdated([]);
     } catch (err) {
       console.error("Order error", err);
+      alert("Order request failed");
     }
   };
 
   return (
-    <div className="p-4">
-      {/* Greeting */}
-      <h2 className="text-xl font-semibold mb-3">
-        Welcome, {user?.name || user?.phone} 👋
-      </h2>
+    <div className="bg-white p-4 rounded shadow min-h-[600px]">
+      <h2 className="text-xl font-semibold mb-4">Menu</h2>
 
-      {/* Category Tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
-        {CATEGORIES.map((c) => (
-          <button
-            key={c.id}
-            onClick={() => setSelectedCategory(c.id)}
-            className={`px-4 py-2 rounded-full text-sm border ${
-              selectedCategory === c.id
-                ? "bg-green-600 text-white border-green-600"
-                : "bg-white text-gray-700 border-gray-300"
-            }`}
-          >
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Menu Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {filteredMenu.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white rounded-lg shadow hover:shadow-lg transition p-3 flex flex-col"
-          >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-28 object-cover rounded"
-            />
-
-            <div className="mt-2 flex justify-between items-center">
-              <h3 className="font-semibold text-sm">{item.name}</h3>
-              <span className="text-gray-700 font-medium text-sm">
-                ${item.price}
-              </span>
+      {/* MENU GRID ONLY — NO CART BELOW */}
+      <div className="grid grid-cols-2 gap-3">
+        {menu.map((item) => (
+          <div key={item.id} className="p-3 border rounded-lg shadow-sm bg-gray-50">
+            <div className="flex justify-between items-center">
+              <strong>{item.name}</strong>
+              <span className="text-gray-600">${item.price}</span>
             </div>
-
             <button
-              onClick={() => addToCart(item)}
-              className="mt-3 py-1 bg-blue-600 text-white rounded text-sm"
+              onClick={() => add(item)}
+              className="mt-3 px-3 py-1 bg-blue-600 text-white rounded w-full"
             >
               Add
             </button>
@@ -136,8 +80,8 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
         ))}
       </div>
 
-      {/* Cart */}
-      <div className="mt-4">
+      {/* Only the place order button — cart removed */}
+      <div className="mt-6">
         <button
           onClick={placeOrder}
           className="px-4 py-2 bg-green-600 text-white rounded w-full"
