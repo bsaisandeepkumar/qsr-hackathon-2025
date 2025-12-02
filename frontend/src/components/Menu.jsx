@@ -24,28 +24,36 @@ export default function Menu({ onTicketCreated }) {
   const add = (item) => setCart(prev => [...prev, item])
   const remove = (index) => setCart(prev => prev.filter((_,i)=>i!==index))
 
-  const placeOrder = async () => {
-    const payload = {
-      profile,
-      items: cart.map(i => i.id),
-      timestamp: Date.now()
-    }
-
-    try {
-     const res = await fetch(`${config.API_BASE_URL}/order`, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
-      })
-      const data = await res.json()
-      onTicketCreated(data, profile)
-    } catch (e) {
-      // fallback: mock ticket
-      const mockTicket = { id: Math.floor(Math.random()*10000), items: cart.map(i=>i.id), status: 'created' }
-      onTicketCreated(mockTicket)
-    }
-    setCart([])
+ // inside Menu component - ensure props include user and onTicketCreated
+const placeOrder = async () => {
+  if (selectedItems.length === 0) {
+    alert("Select at least one item");
+    return;
   }
+  const profileToUse = user?.profile || "in_store";
+  try {
+    const res = await fetch(`${config.API_BASE_URL}/order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profile: profileToUse,
+        items: selectedItems,
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("Order failed", res.status, text);
+      alert("Order failed");
+      return;
+    }
+    const data = await res.json();
+    // notify parent. Keep signature: onTicketCreated(ticket)
+    onTicketCreated(data); // App will set currentTicket and Recommendations use ticketId
+  } catch (err) {
+    console.error("Order error", err);
+    alert("Order request failed");
+  }
+}
 
   return (
     <div className="bg-white p-4 rounded shadow">
