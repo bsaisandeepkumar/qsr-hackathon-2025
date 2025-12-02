@@ -6,25 +6,6 @@ from logging_config.logger import init_logging, get_logger, CorrelationIdMiddlew
 init_logging()
 log = get_logger("backend")
 
-# backend stores frontend logs with correlation IDs
-@app.post("/fe-log")
-async def fe_log(request: Request):
-    body = await request.json()
-    cid = request.headers.get("X-Correlation-ID", "no-cid")
-
-    log.info(
-        f"[FE] {body.get('message')}",
-        extra={
-            "correlation_id": cid,
-            "level": body.get("level"),
-            "extra": body.get("extra"),
-            "timestamp": body.get("timestamp")
-        }
-    )
-
-    return {"status": "ok"}
-
-
 import os
 import asyncio
 from datetime import datetime
@@ -83,6 +64,26 @@ app = FastAPI(title="SmartServe Backend (Hackathon Demo)")
 
 # Add Correlation ID middleware
 app.add_middleware(CorrelationIdMiddleware)
+
+
+# backend stores frontend logs with correlation IDs
+@app.post("/fe-log")
+async def fe_log(request: Request):
+    body = await request.json()
+    cid = request.headers.get("X-Correlation-ID", "no-cid")
+
+    log.info(
+        f"[FE] {body.get('message')}",
+        extra={
+            "correlation_id": cid,
+            "level": body.get("level"),
+            "extra": body.get("extra"),
+            "timestamp": body.get("timestamp")
+        }
+    )
+
+    return {"status": "ok"}
+
 
 # Allow frontend
 app.add_middleware(
