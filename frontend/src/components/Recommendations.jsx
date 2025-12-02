@@ -5,7 +5,7 @@ export default function Recommendations({ ticketId }) {
 
   const getRecommendations = async () => {
     try {
-      const res = await fetch("http://localhost:8000/recommend", {
+      const res = await fetch(`${config.API_BASE_URL}/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
