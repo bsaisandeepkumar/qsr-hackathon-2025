@@ -38,7 +38,7 @@ export default function Menu({ onTicketCreated }) {
         body: JSON.stringify(payload)
       })
       const data = await res.json()
-      onTicketCreated(data)
+      onTicketCreated(data, profile)
     } catch (e) {
       // fallback: mock ticket
       const mockTicket = { id: Math.floor(Math.random()*10000), items: cart.map(i=>i.id), status: 'created' }
