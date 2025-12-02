@@ -42,7 +42,7 @@ export default function App() {
       ) : (
         <div className="min-h-screen bg-gray-50 p-6">
           <header className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">SmartServe — Demo ({user.phone})</h1>
+            <h1 className="text-2xl font-semibold">SmartServe ({user.phone})</h1>
             <div>
               <button onClick={() => { localStorage.removeItem("user"); setUser(null); }} className="px-3 py-1 bg-red-500 text-white rounded">Logout</button>
             </div>
