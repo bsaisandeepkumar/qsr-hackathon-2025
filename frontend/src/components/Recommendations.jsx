@@ -1,17 +1,17 @@
 import React, { useState } from "react"
 import config from "../config"
 
-export default function Recommendations({ ticketId, profile }) {
+export default function Recommendations({ user, ticketId }) {
   const [recs, setRecs] = useState([]);
 
-  const getRecommendations = async () => {
+ const getRecommendations = async () => {
     try {
       const res = await fetch(`${config.API_BASE_URL}/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user: "anonymous",
-          profile: profile,      // ← USE profile from Menu, not a new dropdown
+          user: user?.phone || "anonymous",
+          profile: user?.profile || "in_store",
           ticketId: ticketId || null,
         }),
       });
