@@ -126,39 +126,5 @@ export default function Menu({ user, onTicketCreated }) {
           </div>
         ))}
       </div>
-
-      {/* Cart */}
-      <div className="mt-6 bg-white shadow rounded p-4">
-        <h3 className="font-semibold mb-2">Cart</h3>
-
-        {cart.length === 0 && (
-          <p className="text-gray-500 text-sm">No items added.</p>
-        )}
-
-        {cart.length > 0 && (
-          <ul className="space-y-2">
-            {cart.map((i, idx) => (
-              <li key={idx} className="flex justify-between text-sm">
-                <span>{i.name}</span>
-                <button
-                  onClick={() => removeFromCart(idx)}
-                  className="text-red-500 text-xs"
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <button
-          onClick={placeOrder}
-          disabled={cart.length === 0}
-          className="mt-4 w-full py-2 bg-green-600 text-white rounded disabled:opacity-50"
-        >
-          Place Order
-        </button>
-      </div>
-    </div>
   );
 }
