@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
+import config from "../config"
 
 export default function Recommendations({ ticketId }) {
   const [recs, setRecs] = useState([]);
