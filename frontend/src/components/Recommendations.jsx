@@ -18,6 +18,7 @@ export default function Recommendations({ ticketId, user }) {
           user: user.phone,
           profile: user.profile,
           ticketId: ticketId || null,
+          contextItems: cart.map(i => i.id),
         }),
       });
 
