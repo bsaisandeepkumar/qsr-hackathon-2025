@@ -240,49 +240,34 @@ async def kds_status(ticket_id: int, request: Request):
 from cv.detector import detect_items
 
 @app.post("/verify")
-async def verify(ticket_id: int, sample_hint: str = None, request: Request):
-    log.info(
-        f"Verify called ticket_id={ticket_id} hint={sample_hint}",
-        extra={"correlation_id": request.state.correlation_id},
-    )
+async def verify(
+    request: Request,
+    ticket_id: int,
+    sample_hint: str | None = None
+):
+    cvlog.info(f"[verify] Received verify request for ticket_id={ticket_id}, hint={sample_hint}")
 
-    ticket = get_ticket(ticket_id)
-    if not ticket:
-        log.warning("Ticket not found", extra={"correlation_id": request.state.correlation_id})
-        return {"status": "error", "msg": "ticket not found"}
+    # locate image
+    img_path = f"cv/mock_images/{ticket_id}.jpg"
+    if not os.path.exists(img_path):
+        cvlog.warning(f"[verify] No image found for ticket={ticket_id}, using mock only")
+        detections = detect_mock(img_path="", sample_hint=sample_hint)
+    else:
+        detections = detect_items(img_path, sample_hint=sample_hint)
 
-    img_path = "cv/sample.jpg"
-    detected = detect_items(img_path, sample_hint)
-    expected = ticket["items"]
+    cvlog.info(f"[verify] detections={detections}")
 
-    log.info(
-        f"CV detected={detected} expected={expected}",
-        extra={"correlation_id": request.state.correlation_id},
-    )
+    expected_items = await get_order_items(ticket_id)
+    missing = [item for item in expected_items if item not in detections]
 
-    missing = [i for i in expected if i not in detected]
-    extra_items = [d for d in detected if d not in expected]
+    cvlog.info(f"[verify] expected={expected_items}, missing={missing}")
 
-    if not missing and not extra_items:
-        set_ticket_status(ticket_id, "verified")
-        log.info(
-            f"Verification success for ticket {ticket_id}",
-            extra={"correlation_id": request.state.correlation_id},
-        )
-        return {"status": "ok", "verified": True, "expected": expected, "detected": detected}
-
-    set_ticket_status(ticket_id, "mismatch")
-
-    log.warning(
-        f"Verification mismatch ticket={ticket_id} missing={missing} extra={extra_items}",
-        extra={"correlation_id": request.state.correlation_id},
-    )
-
-    return {
-        "status": "mismatch",
-        "verified": False,
-        "expected": expected,
-        "detected": detected,
+    result = {
+        "ticket_id": ticket_id,
+        "expected": expected_items,
+        "detected": detections,
         "missing": missing,
-        "extra": extra_items,
+        "status": "OK" if not missing else "MISMATCH"
     }
+
+    return result
