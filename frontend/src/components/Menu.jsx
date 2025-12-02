@@ -135,7 +135,7 @@ export default function Menu({ user, onTicketCreated }) {
         ))}
       </div>
 
-  // Cart
+ {/* Cart */}
       <div className="mt-4">
   <button
     onClick={placeOrder}
