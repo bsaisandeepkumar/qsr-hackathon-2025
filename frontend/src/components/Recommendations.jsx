@@ -33,7 +33,7 @@ export default function Recommendations({ ticketId, user }) {
   // 🔥 Auto-load whenever user logs in or ticket changes
   useEffect(() => {
     getRecommendations();
-  }, [user, ticketId]);
+  }, [user, ticketId, cart]);
 
   return (
     <div className="bg-white p-4 rounded shadow">
