@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import config from "../config";
 
-export default function Recommendations({ ticketId, user }) {
+export default function Recommendations({ ticketId, user, cart }) {
   const [recs, setRecs] = useState([]);
   const [loading, setLoading] = useState(false);
 
