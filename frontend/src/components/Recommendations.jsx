@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import config from "../config"
 
-export default function Recommendations({ ticketId }) {
+export default function Recommendations({ ticketId, profile }) {
   const [recs, setRecs] = useState([]);
 
   const getRecommendations = async () => {
@@ -11,7 +11,7 @@ export default function Recommendations({ ticketId }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user: "anonymous",
-          profile: "returning",
+          profile: profile,      // ← USE profile from Menu, not a new dropdown
           ticketId: ticketId || null,
         }),
       });
