@@ -25,10 +25,11 @@ export default function Register({ phone, onRegistered }) {
 
       if (data.status === "created" || data.status === "exists") {
         const user = {
-          phone,
-          name: name || null,
-          profile: data.profile, // backend returns default
-        };
+  phone,
+  name: name || null,
+  profile: data.profile
+};
+localStorage.setItem("user", JSON.stringify(user));
 
         localStorage.setItem("user", JSON.stringify(user));
         onRegistered(user);
