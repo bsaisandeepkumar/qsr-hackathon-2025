@@ -167,26 +167,43 @@ async def recommend(req: RecommendRequest, request: Request):
         extra={"correlation_id": request.state.correlation_id},
     )
 
+    # ------------------------------
+    # 1. Load stored profile from DB
+    # ------------------------------
+    stored_profile = None
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        cur = conn.cursor()
+        cur.execute("SELECT profile FROM users WHERE phone = ?", (req.user,))
+        row = cur.fetchone()
+        conn.close()
+
+        if row:
+            stored_profile = row[0]
+            log.info(
+                f"Loaded stored profile for user={req.user}: {stored_profile}",
+                extra={"correlation_id": request.state.correlation_id},
+            )
+        else:
+            log.info(
+                f"No stored profile found for user={req.user}, using fallback={req.profile}",
+                extra={"correlation_id": request.state.correlation_id},
+            )
+    except Exception as e:
+        log.error(
+            f"DB lookup failed for user={req.user}: {e}",
+            extra={"correlation_id": request.state.correlation_id},
+        )
+
+    # Final profile to use for recommendation
+    effective_profile = stored_profile if stored_profile else req.profile
+
+    # ------------------------------
+    # 2. Get context from ticket items
+    # ------------------------------
     context_items = []
-    if req.ticketId:
-        ticket = get_ticket(req.ticketId)
-        if ticket:
-            context_items = ticket["items"]
+    if req.tic
 
-    recs = get_recommendations_vector(
-        user=req.user,
-        profile=req.profile,
-        timestamp=req.time,
-        context_ticket_items=context_items,
-        top_k=3
-    )
-
-    log.info(
-        f"Recommendation result={recs}",
-        extra={"correlation_id": request.state.correlation_id},
-    )
-
-    return {"recommendations": recs}
 
 # ---- Order ----
 @app.post("/order")
