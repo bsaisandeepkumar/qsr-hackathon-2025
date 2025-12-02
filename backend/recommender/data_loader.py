@@ -1,8 +1,15 @@
 # recommender/data_loader.py
 
 import json
+import os
 from datetime import datetime
 from typing import List, Dict, Any
+
+MENU_FILE = os.path.join(os.path.dirname(__file__), "..", "menu", "menu.json")
+
+def load_menu():
+    with open(MENU_FILE, "r") as f:
+        return json.load(f)
 
 # Menu dataset
 MENU = [
