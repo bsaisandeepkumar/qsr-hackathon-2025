@@ -202,7 +202,28 @@ async def recommend(req: RecommendRequest, request: Request):
     # 2. Get context from ticket items
     # ------------------------------
     context_items = []
-    if req.tic
+    if req.ticketId:
+        ticket = get_ticket(req.ticketId)
+        if ticket:
+            context_items = ticket["items"]
+
+    # ------------------------------
+    # 3. Call recommender engine
+    # ------------------------------
+    recs = get_recommendations_vector(
+        user=req.user,
+        profile=effective_profile,
+        timestamp=req.time,
+        context_ticket_items=context_items,
+        top_k=3
+    )
+
+    log.info(
+        f"Final recommendations (profile={effective_profile}) -> {recs}",
+        extra={"correlation_id": request.state.correlation_id},
+    )
+
+    return {"recommendations": recs}
 
 
 # ---- Order ----
