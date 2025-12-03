@@ -85,13 +85,17 @@ export default function App() {
             />
           </div>
 
-          <div>
-            <Recommendations
-              ticketId={currentTicket?.id}
-              user={JSON.parse(localStorage.getItem("user") || "null")}
-              cart={cart}
-            />
-          </div>
+<div className="flex flex-col gap-4">
+  <Recommendations
+    ticketId={currentTicket?.id}
+    user={JSON.parse(localStorage.getItem("user") || "null")}
+    cart={cart}
+  />
+  <CartPanel
+    cart={cart}
+    onPlaceOrder={() => console.log("PLACE ORDER FROM PANEL")}
+  />
+</div>>
         </main>
       )
     )}
