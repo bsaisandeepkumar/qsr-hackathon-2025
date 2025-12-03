@@ -30,61 +30,61 @@ export default function App() {
     setUser(userObj);
   };
 
-  return (
-    <>
-      {!user ? (
-        <Login onLoginSuccess={onLoginSuccess} />
-      ) : user.newUser ? (
-        <Register phone={user.phone} onRegistered={onRegistered} />
-      ) : (
-        <div className="min-h-screen bg-gray-50 p-6">
-          <header className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">
-              SmartServe ({user.name || user.phone})
-            </h1>
-            <button
-              onClick={() => {
-                localStorage.removeItem("user");
-                setUser(null);
-              }}
-              className="px-3 py-1 bg-red-500 text-white rounded"
-            >
-              Logout
-            </button>
-          </header>
+ return (
+  <>
+    {!user ? (
+      <Login onLoginSuccess={onLoginSuccess} />
+    ) : user.newUser ? (
+      <Register phone={user.phone} onRegistered={onRegistered} />
+    ) : (
+      <div className="min-h-screen bg-gray-50 p-6">
+        <header className="mb-6 flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">
+            SmartServe ({user.name || user.phone})
+          </h1>
+          <button
+            onClick={() => {
+              localStorage.removeItem("user");
+              setUser(null);
+            }}
+            className="px-3 py-1 bg-red-500 text-white rounded"
+          >
+            Logout
+          </button>
+        </header>
 
-          {view === "kiosk" && (
-            <main className="grid grid-cols-3 gap-6">
+        {view === "kiosk" && (
+          <main className="grid grid-cols-3 gap-6">
 
-              {/* LEFT COLUMN (Menu) */}
-              <div className="col-span-2">
-                <Menu
-                  user={user}
-                  onTicketCreated={setCurrentTicket}
-                  onCartUpdated={setCart}
-                />
-              </div>
+            {/* LEFT COLUMN */}
+            <div className="col-span-2">
+              <Menu
+                user={user}
+                onTicketCreated={setCurrentTicket}
+                onCartUpdated={setCart}
+              />
+            </div>
 
-              {/* RIGHT COLUMN (Recommendations + CartPanel) */}
-              <div className="col-span-1 flex flex-col gap-6">
-                <Recommendations
-                  ticketId={currentTicket?.id}
-                  user={user}
-                  cart={cart}
-                />
+            {/* RIGHT COLUMN */}
+            <div className="col-span-1 flex flex-col gap-6">
+              <Recommendations
+                ticketId={currentTicket?.id}
+                user={user}
+                cart={cart}
+              />
 
-                <CartPanel
-                  cart={cart}
-                  onCartUpdated={(c) => setCart(c)}
-                  onOrderPlaced={(t) => setCurrentTicket(t)}
-                />
-              </div>
-            </main>
-          )}
+              <CartPanel
+                cart={cart}
+                onCartUpdated={(c) => setCart(c)}
+                onOrderPlaced={(t) => setCurrentTicket(t)}
+              />
+            </div>
 
-          {view === "kds" && <KDS ticketId={currentTicket?.id} />}
-        </div>
-      )}
-    </>
-  );
-}
+          </main>   {/* ← YES, right place */}
+        )}
+
+        {view === "kds" && <KDS ticketId={currentTicket?.id} />}
+      </div>
+    )}
+  </>
+);
