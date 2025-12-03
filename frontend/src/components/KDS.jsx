@@ -151,7 +151,7 @@ export default function KDS({ ticketId }) {
   <h2 className="text-xl font-semibold mb-2">Station 4</h2>
 
   <p className="text-sm">Ticket:</p>
-  <p className="text-sm">Status: Delivered/p>
+  <p className="text-sm">Status: Delivered</p>
   <p className="text-sm mb-3">Verification: Completed</p>
 
   <img
