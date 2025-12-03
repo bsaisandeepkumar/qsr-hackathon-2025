@@ -140,17 +140,6 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
           </div>
         ))}
       </div>
-
-      {/* Cart */}
-      <div className="mt-4">
-        <button
-          onClick={placeOrder}
-          className="px-4 py-2 bg-green-600 text-white rounded w-full"
-          disabled={cart.length === 0}
-        >
-          Place Order
-        </button>
-      </div>
     </div>
   );
 }
