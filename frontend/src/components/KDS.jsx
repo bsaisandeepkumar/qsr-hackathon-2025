@@ -88,13 +88,14 @@ export default function KDS({ ticketId }) {
         <h2 className="text-lg font-semibold mb-3">AI Camera Verification</h2>
 
         <div className="bg-black rounded overflow-hidden shadow mb-4">
-          <img
-  src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif"
-  alt="Camera Preview"
-  className="w-full h-48 object-cover" />
-          <div className="px-3 py-2 bg-gray-800 text-white text-sm">
-            AI Camera — Station 3
-          </div>
+              <img 
+      src="/camera-feed_1.gif"
+      alt="Camera simulation"
+      className="w-full h-48 object-cover"
+    />
+    <div className="px-3 py-2 bg-gray-800 text-white text-sm">
+      AI Camera — Station 3
+    </div>
         </div>
 
         {/* Scenario Buttons */}
