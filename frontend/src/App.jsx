@@ -31,17 +31,32 @@ export default function App() {
   };
 
  return (
-  <>
-    {!user ? (
-      <Login onLoginSuccess={onLoginSuccess} />
-    ) : user.newUser ? (
-      <Register phone={user.phone} onRegistered={onRegistered} />
-    ) : (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <header className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">
-            SmartServe ({user.name || user.phone})
-          </h1>
+  <div className="min-h-screen bg-gray-50 p-6">
+
+    {/* Always visible header */}
+    <header className="mb-6 flex items-center justify-between">
+      <h1 className="text-2xl font-semibold">
+        SmartServe Demo
+        {user && user.name ? ` — Welcome ${user.name}` : ""}
+      </h1>
+
+      {/* Buttons visible even if not logged in */}
+      <div className="flex gap-3">
+        <button
+          onClick={() => setView("kiosk")}
+          className={`px-3 py-1 rounded ${view === "kiosk" ? "bg-blue-600 text-white" : "bg-white border"}`}
+        >
+          Kiosk
+        </button>
+
+        <button
+          onClick={() => setView("kds")}
+          className={`px-3 py-1 rounded ${view === "kds" ? "bg-blue-600 text-white" : "bg-white border"}`}
+        >
+          KDS
+        </button>
+
+        {user && (
           <button
             onClick={() => {
               localStorage.removeItem("user");
@@ -51,38 +66,40 @@ export default function App() {
           >
             Logout
           </button>
-        </header>
-
-        {view === "kiosk" && (
-          <main className="grid grid-cols-3 gap-6">
-            {/* LEFT COLUMN */}
-            <div className="col-span-2">
-              <Menu
-                user={user}
-                onTicketCreated={setCurrentTicket}
-                onCartUpdated={setCart}
-              />
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="col-span-1 flex flex-col gap-6">
-              <Recommendations
-                ticketId={currentTicket?.id}
-                user={user}
-                cart={cart}
-              />
-              <CartPanel
-                cart={cart}
-                onCartUpdated={setCart}
-                onOrderPlaced={setCurrentTicket}
-              />
-            </div>
-          </main>
         )}
-
-        {view === "kds" && <KDS ticketId={currentTicket?.id} />}
       </div>
+    </header>
+
+    {/* Main content */}
+    {view === "kiosk" && (
+      !user ? (
+        <Login onLoginSuccess={onLoginSuccess} />
+      ) : user.newUser ? (
+        <Register phone={user.phone} onRegistered={onRegistered} />
+      ) : (
+        <main className="grid grid-cols-3 gap-6">
+          <div className="col-span-2">
+            <Menu
+              onTicketCreated={(t) => setCurrentTicket(t)}
+              onCartUpdated={(c) => setCart(c)}
+            />
+          </div>
+
+          <div>
+            <Recommendations
+              ticketId={currentTicket?.id}
+              user={JSON.parse(localStorage.getItem("user") || "null")}
+              cart={cart}
+            />
+          </div>
+        </main>
+      )
     )}
-  </>
+
+    {view === "kds" && (
+      <KDS ticketId={currentTicket?.id} />
+    )}
+
+  </div>
 );
 }
