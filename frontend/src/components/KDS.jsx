@@ -90,7 +90,7 @@ export default function KDS({ ticketId }) {
 
     {/* -------- Station 1 -------- */}
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 1</h2>
+  <h2 className="text-xl font-semibold mb-2">Station 1</h2>
 
   <p className="text-sm">Ticket:</p>
   <p className="text-sm">Status: in_kitchen</p>
@@ -110,7 +110,7 @@ export default function KDS({ ticketId }) {
 
    {/* -------- Station 2 -------- */}
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 2</h2>
+  <h2 className="text-xl font-semibold mb-2">Station 2</h2>
 
   <p className="text-sm">Ticket:</p>
   <p className="text-sm">Status: in_kitchen</p>
@@ -129,7 +129,7 @@ export default function KDS({ ticketId }) {
 </div>
 {/* -------- Station 3 -------- */}
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 3</h2>
+  <h2 className="text-xl font-semibold mb-2">Station 3</h2>
 
   <p className="text-sm">Ticket:</p>
   <p className="text-sm">Status: in_kitchen</p>
@@ -149,7 +149,7 @@ export default function KDS({ ticketId }) {
 
   {/* -------- Station 4 -------- */}
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 4</h2>
+  <h2 className="text-xl font-semibold mb-2">Station 4</h2>
 
   <p className="text-sm">Ticket:</p>
   <p className="text-sm">Status: in_kitchen</p>
