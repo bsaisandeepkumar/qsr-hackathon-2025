@@ -89,7 +89,7 @@ export default function KDS({ ticketId }) {
         <div className="bg-black rounded overflow-hidden shadow mb-4">
             <div className="w-full aspect-square rounded-lg overflow-hidden border shadow bg-black flex items-center justify-center">
   <img
-    src="/camera-feed_1.gif"
+    src="/camera-feed_1.jpg"
     alt="Camera simulation"
     className="w-full h-full object-cover"
   />
