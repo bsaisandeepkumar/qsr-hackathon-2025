@@ -56,6 +56,18 @@ if (!ticketId) {
           <strong>All items verified. Ready to hand off.</strong>
         </div>
       )}
+
+      <div className="bg-black rounded overflow-hidden shadow mb-4">
+  <img 
+    src="/camera-feed.gif"
+    alt="Camera Feed Simulation"
+    className="w-full h-48 object-cover opacity-90"
+  />
+  <div className="px-3 py-2 bg-gray-800 text-white text-sm">
+    AI Camera — Station 3
+  </div>
+</div>
+
     </div>
   )
 }
