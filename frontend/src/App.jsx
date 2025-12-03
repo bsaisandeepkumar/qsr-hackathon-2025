@@ -93,8 +93,10 @@ export default function App() {
   />
   <CartPanel
     cart={cart}
-    onPlaceOrder={() => console.log("PLACE ORDER FROM PANEL")}
-  />
+    cart={cart}
+    onCartUpdated={(c) => setCart(c)}
+    onOrderPlaced={(ticket) => setCurrentTicket(ticket)}
+    />
 </div>
         </main>
       )
