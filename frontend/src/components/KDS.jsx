@@ -88,93 +88,84 @@ export default function KDS({ ticketId }) {
 
   <div className="grid grid-cols-4 gap-4">
 
-    {/* ---------------------- */}
-    {/* STATION 1 — MISMATCH */}
-    {/* ---------------------- */}
-    <div className="bg-white p-3 rounded-lg shadow border">
-      <p className="text-sm font-semibold mb-2 text-gray-700">Station 1</p>
+    {/* -------- Station 1 -------- */}
+<div className="p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 1</h2>
 
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-black mb-3">
-        <img
-          src="/camera-feed.gif"
-          alt="Camera 1"
-          className="w-full h-full object-cover"
-        />
-      </div>
+  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Status: in_kitchen</p>
+  <p className="text-sm mb-3">Verification: pending</p>
 
-      <button
-        onClick={() => runScenario("mismatch")}
-        className="bg-yellow-500 text-white py-1.5 w-full rounded"
-      >
-        ⚠ Mismatch
-      </button>
-    </div>
+  <img
+    src="/station1.png"
+    alt="Station 1 Camera"
+    className="w-full h-auto rounded-md mb-3"
+  />
 
-    {/* ---------------------- */}
-    {/* STATION 2 — MATCH */}
-    {/* ---------------------- */}
-    <div className="bg-white p-3 rounded-lg shadow border">
-      <p className="text-sm font-semibold mb-2 text-gray-700">Station 2</p>
+  {/* Station-specific button */}
+  <button className="bg-red-500 text-white px-4 py-2 rounded-lg w-full">
+    Mismatch
+  </button>
+</div>
 
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-black mb-3">
-        <img
-          src="/camera-feed.gif"
-          alt="Camera 2"
-          className="w-full h-full object-cover"
-        />
-      </div>
+   {/* -------- Station 2 -------- */}
+<div className="p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 2</h2>
 
-      <button
-        onClick={() => runScenario("ok")}
-        className="bg-green-600 text-white py-1.5 w-full rounded"
-      >
-        ✔ Match
-      </button>
-    </div>
+  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Status: in_kitchen</p>
+  <p className="text-sm mb-3">Verification: pending</p>
 
-    {/* ---------------------- */}
-    {/* STATION 3 — MATCH */}
-    {/* ---------------------- */}
-    <div className="bg-white p-3 rounded-lg shadow border">
-      <p className="text-sm font-semibold mb-2 text-gray-700">Station 3</p>
+  <img
+    src="/station2.png"
+    alt="Station 2 Camera"
+    className="w-full h-auto rounded-md mb-3"
+  />
 
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-black mb-3">
-        <img
-          src="/camera-feed.gif"
-          alt="Camera 3"
-          className="w-full h-full object-cover"
-        />
-      </div>
+  {/* Station-specific button */}
+  <button className="bg-green-500 text-white px-4 py-2 rounded-lg w-full">
+    Match
+  </button>
+</div>
+{/* -------- Station 3 -------- */}
+<div className="p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 3</h2>
 
-      <button
-        onClick={() => runScenario("ok")}
-        className="bg-green-600 text-white py-1.5 w-full rounded"
-      >
-        ✔ Match
-      </button>
-    </div>
+  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Status: in_kitchen</p>
+  <p className="text-sm mb-3">Verification: pending</p>
 
-    {/* ---------------------- */}
-    {/* STATION 4 — MATCH */}
-    {/* ---------------------- */}
-    <div className="bg-white p-3 rounded-lg shadow border">
-      <p className="text-sm font-semibold mb-2 text-gray-700">Station 4</p>
+  <img
+    src="/station3.png"
+    alt="Station 3 Camera"
+    className="w-full h-auto rounded-md mb-3"
+  />
 
-      <div className="w-full aspect-square rounded-lg overflow-hidden bg-black mb-3">
-        <img
-          src="/camera-feed.gif"
-          alt="Camera 4"
-          className="w-full h-full object-cover"
-        />
-      </div>
+  {/* Station-specific button */}
+  <button className="bg-green-500 text-white px-4 py-2 rounded-lg w-full">
+    Match
+  </button>
+</div>
 
-      <button
-        onClick={() => runScenario("ok")}
-        className="bg-green-600 text-white py-1.5 w-full rounded"
-      >
-        ✔ Match
-      </button>
-    </div>
+  {/* -------- Station 4 -------- */}
+<div className="p-4 bg-gray-100 rounded-lg shadow-md">
+  <h2 className="text-xl font-semibold mb-2">AI Camera Verification – Station 4</h2>
+
+  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Status: in_kitchen</p>
+  <p className="text-sm mb-3">Verification: pending</p>
+
+  <img
+    src="/station4.png"
+    alt="Station 4 Camera"
+    className="w-full h-auto rounded-md mb-3"
+  />
+
+  {/* Station-specific button */}
+  <button className="bg-green-500 text-white px-4 py-2 rounded-lg w-full">
+    Match
+  </button>
+</div>
 
   </div>
 </div>
