@@ -90,8 +90,8 @@ export default function KDS({ ticketId }) {
   <h2 className="text-xl font-semibold mb-2">Station 1</h2>
 
   <p className="text-sm">Ticket:{ticketId}</p>
-  <p  Status:{status?.status || "loading"}</p>
-   <p Verification:{status?.verification?.status || "unknown"}</p>
+<p className="text-sm">Status: {status?.status || "loading"}</p>
+<p className="text-sm">Verification: {status?.verification?.status || "unknown"}</p>
 
   <img
     src="/station1.png"
