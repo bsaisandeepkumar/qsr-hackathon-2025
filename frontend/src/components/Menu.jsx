@@ -53,8 +53,8 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
   };
 
   const placeOrder = async () => {
-
-@@ -57,78 +30,49 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
+    if (cart.length === 0) {
+      alert("Select at least one item");
       return;
     }
 
@@ -137,8 +137,7 @@ export default function Menu({ user, onTicketCreated, onCartUpdated }) {
             >
               Add
             </button>
-
-@@ -136,17 +80,17 @@
+          </div>
         ))}
       </div>
 
