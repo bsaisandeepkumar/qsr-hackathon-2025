@@ -62,20 +62,19 @@ export default function App() {
                   onCartUpdated={setCart}
                 />
 
-                {/* NEW: Cart moved ABOVE recommendations */}
-                <div className="mt-4">
-                  <CartPanel cart={cart} setCart={setCart} />
-                </div>
-              </div>
+<div className="col-span-1 flex flex-col gap-6">
+  <Recommendations
+    ticketId={currentTicket?.id}
+    user={user}
+    cart={cart}
+  />
 
-              {/* RIGHT SIDE → Recommendations */}
-              <div>
-                <Recommendations
-                  ticketId={currentTicket?.id}
-                  user={user}
-                  cart={cart}
-                />
-              </div>
+  <CartPanel
+    cart={cart}
+    onCartUpdated={(c) => setCart(c)}
+    onOrderPlaced={(t) => setCurrentTicket(t)}
+  />
+</div>
             </main>
           )}
 
