@@ -212,49 +212,34 @@ async def auth_register(req: RegisterRequest, request: Request):
 @app.post("/recommend")
 async def recommend(req: RecommendRequest, request: Request):
     log.info(
-        f"Recommend called user={req.user} ticketId={req.ticketId}",
+        f"Recommend called user={req.user} profile={req.profile} ticketId={req.ticketId}",
         extra={"correlation_id": request.state.correlation_id},
     )
 
-    # load stored profile
-    stored_profile = None
-    if req.user:
-        try:
-            conn = get_conn()
-            cur = conn.cursor()
-            cur.execute("SELECT profile FROM users WHERE phone = ?", (req.user,))
-            row = cur.fetchone()
-            conn.close()
-            if row:
-                stored_profile = row[0]
-                log.info(
-                    f"Loaded stored profile for user={req.user}: {stored_profile}",
-                    extra={"correlation_id": request.state.correlation_id},
-                )
-        except Exception as e:
-            log.error(
-                f"DB lookup failed for user={req.user}: {e}",
-                extra={"correlation_id": request.state.correlation_id},
-            )
+    # 🔥 Hard-coded demo recommendations
+    STATIC_RECS = {
+        "in_store": [
+            {"id": "fries", "name": "Crispy Fries", "reason": "Popular add-on"},
+            {"id": "cola", "name": "Soft Drink", "reason": "Combo saver"},
+            {"id": "icecream", "name": "Vanilla Ice Cream", "reason": "Top dessert pick"},
+        ],
+        "returning": [
+            {"id": "burger", "name": "Classic Burger", "reason": "Your go-to favorite"},
+            {"id": "fries", "name": "Fries", "reason": "Pairs well with your order"},
+            {"id": "coffee", "name": "Hot Coffee", "reason": "Recommended this time of day"},
+        ],
+        "health_focus": [
+            {"id": "salad", "name": "Green Salad", "reason": "Low-calorie choice"},
+            {"id": "soup", "name": "Tomato Soup", "reason": "Light & healthy"},
+            {"id": "juice", "name": "Fresh Juice", "reason": "No added sugar"},
+        ]
+    }
 
-    effective_profile = stored_profile if stored_profile else req.profile
-
-    context_items = []
-    if req.ticketId:
-        ticket = get_ticket(req.ticketId)
-        if ticket:
-            context_items = ticket["items"]
-
-    recs = get_recommendations_vector(
-        user=req.user,
-        profile=effective_profile,
-        timestamp=req.time,
-        context_ticket_items=context_items,
-        top_k=3,
-    )
+    # default if unknown profile
+    recs = STATIC_RECS.get(req.profile, STATIC_RECS["in_store"])
 
     log.info(
-        f"Final recommendations (profile={effective_profile}) -> {recs}",
+        f"Static demo recommendation result={recs}",
         extra={"correlation_id": request.state.correlation_id},
     )
 
