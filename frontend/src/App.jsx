@@ -5,7 +5,7 @@ import Register from "./components/Register";
 import Menu from "./components/Menu";
 import Recommendations from "./components/Recommendations";
 import KDS from "./components/KDS";
-import CartPanel from "./components/CartPanel"; // ⬅ Add this import
+import CartPanel from "./components/CartPanel";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -55,26 +55,30 @@ export default function App() {
 
           {view === "kiosk" && (
             <main className="grid grid-cols-3 gap-6">
-              {/* LEFT SIDE → Menu */}
+
+              {/* LEFT COLUMN (Menu) */}
               <div className="col-span-2">
                 <Menu
+                  user={user}
                   onTicketCreated={setCurrentTicket}
                   onCartUpdated={setCart}
                 />
+              </div>
 
-<div className="col-span-1 flex flex-col gap-6">
-  <Recommendations
-    ticketId={currentTicket?.id}
-    user={user}
-    cart={cart}
-  />
+              {/* RIGHT COLUMN (Recommendations + CartPanel) */}
+              <div className="col-span-1 flex flex-col gap-6">
+                <Recommendations
+                  ticketId={currentTicket?.id}
+                  user={user}
+                  cart={cart}
+                />
 
-  <CartPanel
-    cart={cart}
-    onCartUpdated={(c) => setCart(c)}
-    onOrderPlaced={(t) => setCurrentTicket(t)}
-  />
-</div>
+                <CartPanel
+                  cart={cart}
+                  onCartUpdated={(c) => setCart(c)}
+                  onOrderPlaced={(t) => setCurrentTicket(t)}
+                />
+              </div>
             </main>
           )}
 
