@@ -83,21 +83,58 @@ export default function KDS({ ticketId }) {
         <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}</div>
       </div>
 
-      {/* AI Camera block */}
-      <div className="p-4 bg-white rounded shadow mb-6">
-        <h2 className="text-lg font-semibold mb-3">AI Camera Verification</h2>
-        <div className="bg-black rounded overflow-hidden shadow mb-4">
-            <div className="w-full aspect-square rounded-lg overflow-hidden border shadow bg-black flex items-center justify-center">
-  <img
-    src="/camera-feed_1.jpg"
-    alt="Camera simulation"
-    className="w-full h-full object-cover"
-  />
-</div>
-    <div className="px-3 py-2 bg-gray-800 text-white text-sm">
-      AI Camera — Station 3
+{/* --- AI CAMERA VERIFICATION --- */}
+<h3 className="text-lg font-semibold mt-6 mb-3">AI Camera Verification</h3>
+
+<div className="grid grid-cols-4 gap-4">
+  {/* Camera 1 */}
+  <div className="bg-white p-3 rounded-lg shadow border">
+    <p className="text-sm font-semibold mb-2 text-gray-700">Station 1</p>
+    <div className="w-full aspect-square rounded-lg overflow-hidden bg-black">
+      <img
+        src="/camera-feed.gif"
+        alt="Camera 1"
+        className="w-full h-full object-cover"
+      />
     </div>
-        </div>
+  </div>
+
+  {/* Camera 2 */}
+  <div className="bg-white p-3 rounded-lg shadow border">
+    <p className="text-sm font-semibold mb-2 text-gray-700">Station 2</p>
+    <div className="w-full aspect-square rounded-lg overflow-hidden bg-black">
+      <img
+        src="/camera-feed.gif"
+        alt="Camera 2"
+        className="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+
+  {/* Camera 3 */}
+  <div className="bg-white p-3 rounded-lg shadow border">
+    <p className="text-sm font-semibold mb-2 text-gray-700">Station 3</p>
+    <div className="w-full aspect-square rounded-lg overflow-hidden bg-black">
+      <img
+        src="/camera-feed.gif"
+        alt="Camera 3"
+        className="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+
+  {/* Camera 4 */}
+  <div className="bg-white p-3 rounded-lg shadow border">
+    <p className="text-sm font-semibold mb-2 text-gray-700">Station 4</p>
+    <div className="w-full aspect-square rounded-lg overflow-hidden bg-black">
+      <img
+        src="/camera-feed.gif"
+        alt="Camera 4"
+        className="w-full h-full object-cover"
+      />
+    </div>
+  </div>
+</div>
 
         {/* Scenario Buttons */}
         <div className="grid grid-cols-2 gap-2">
