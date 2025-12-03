@@ -90,10 +90,8 @@ export default function KDS({ ticketId }) {
   <h2 className="text-xl font-semibold mb-2">Station 1</h2>
 
   <p className="text-sm">Ticket:{ticketId}</p>
-  <div className="mb-4">
-    <div>Status:{status?.status || "loading"}</div>
-    <div>Verification:{status?.verification?.status || "unknown"}</div>
-  </div>
+  <p  Status:{status?.status || "loading"}</p>
+   <p Verification:{status?.verification?.status || "unknown"}</p>
 
   <img
     src="/station1.png"
@@ -111,7 +109,7 @@ export default function KDS({ ticketId }) {
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
   <h2 className="text-xl font-semibold mb-2">Station 2</h2>
 
-  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Ticket: {ticketId} -1 </p>
   <p className="text-sm">Status: Delivered</p>
   <p className="text-sm mb-3">Verification: Completed</p>
 
@@ -130,7 +128,7 @@ export default function KDS({ ticketId }) {
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
   <h2 className="text-xl font-semibold mb-2">Station 3</h2>
 
-  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Ticket: {ticketId} -2 </p>
   <p className="text-sm">Status: Delivered</p>
   <p className="text-sm mb-3">Verification: Completed</p>
 
@@ -150,7 +148,7 @@ export default function KDS({ ticketId }) {
 <div className="p-4 bg-gray-100 rounded-lg shadow-md">
   <h2 className="text-xl font-semibold mb-2">Station 4</h2>
 
-  <p className="text-sm">Ticket:</p>
+  <p className="text-sm">Ticket: {ticketId} -4</p>
   <p className="text-sm">Status: Delivered</p>
   <p className="text-sm mb-3">Verification: Completed</p>
 
