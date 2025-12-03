@@ -95,7 +95,7 @@ export default function App() {
     cart={cart}
     onPlaceOrder={() => console.log("PLACE ORDER FROM PANEL")}
   />
-</div>>
+</div>
         </main>
       )
     )}
