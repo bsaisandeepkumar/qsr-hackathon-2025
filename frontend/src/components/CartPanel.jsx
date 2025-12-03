@@ -2,14 +2,14 @@
 import React from "react";
 import config from "../config";
 
-export default function CartPanel({ cart, onCartUpdated, onOrderPlaced }) {
+export default function CartPanel({ cart = [], onCartUpdated = () => {}, onOrderPlaced }) {
   const remove = (index) => {
     const updated = cart.filter((_, i) => i !== index);
     onCartUpdated(updated);
   };
 
   const placeOrder = async () => {
-    if (cart.length === 0) return;
+    if (!Array.isArray(cart) || cart.length === 0) return;
 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const profile = user?.profile || "in_store";
@@ -24,10 +24,21 @@ export default function CartPanel({ cart, onCartUpdated, onOrderPlaced }) {
         }),
       });
 
-      const data = await res.json();
-      onOrderPlaced(data);
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Order failed", res.status, text);
+        alert("Order failed");
+        return;
+      }
 
-      // clear cart
+      const data = await res.json();
+
+      // Inform parent (if provided)
+      if (typeof onOrderPlaced === "function") {
+        onOrderPlaced(data);
+      }
+
+      // clear cart via parent
       onCartUpdated([]);
     } catch (err) {
       console.error("Order error", err);
@@ -37,19 +48,16 @@ export default function CartPanel({ cart, onCartUpdated, onOrderPlaced }) {
 
   return (
     <div className="bg-white p-4 rounded shadow">
-      <h2 className="text-lg font-semibold mb-3">Your Cart</h2>
+      <h2 className="text-lg font-semibold mb-3">🛒 Your Cart</h2>
 
       {cart.length === 0 ? (
-        <p className="text-gray-500">Your cart is empty</p>
+        <p className="text-gray-500">No items yet</p>
       ) : (
-        <ul className="mb-4">
-          {cart.map((c, i) => (
-            <li key={i} className="flex justify-between py-1">
-              <span>{c.name}</span>
-              <button
-                className="text-red-500 text-sm"
-                onClick={() => remove(i)}
-              >
+        <ul className="space-y-2">
+          {cart.map((item, index) => (
+            <li key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded">
+              <span>{item.name}</span>
+              <button onClick={() => remove(index)} className="text-red-500 text-sm">
                 Remove
               </button>
             </li>
