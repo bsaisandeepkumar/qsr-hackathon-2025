@@ -19,27 +19,11 @@ export default function KDS({ ticketId }) {
         };
         break;
 
-      case "fries_missing":
+      case "mismatch":
         mock = {
           ticketId,
           status: "mismatch",
           verification: { status: "mismatch", missing: ["fries"] }
-        };
-        break;
-
-      case "drink_missing":
-        mock = {
-          ticketId,
-          status: "mismatch",
-          verification: { status: "mismatch", missing: ["drink"] }
-        };
-        break;
-
-      case "extra":
-        mock = {
-          ticketId,
-          status: "extra_item",
-          verification: { status: "extra", extra: ["nuggets"] }
         };
         break;
 
@@ -119,16 +103,8 @@ export default function KDS({ ticketId }) {
             ✔ Items Match
           </button>
 
-          <button onClick={() => runScenario("fries_missing")} className="bg-yellow-500 text-white py-2 rounded">
-            ⚠ Fries Missing
-          </button>
-
-          <button onClick={() => runScenario("drink_missing")} className="bg-yellow-500 text-white py-2 rounded">
-            ⚠ Drink Missing
-          </button>
-
-          <button onClick={() => runScenario("extra")} className="bg-purple-600 text-white py-2 rounded">
-            ➕ Extra Item
+          <button onClick={() => runScenario("mismatch")} className="bg-yellow-500 text-white py-2 rounded">
+            ⚠ Mismatch
           </button>
         </div>
       </div>
