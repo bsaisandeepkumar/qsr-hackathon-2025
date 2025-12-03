@@ -93,7 +93,6 @@ export default function App() {
   />
   <CartPanel
     cart={cart}
-    cart={cart}
     onCartUpdated={(c) => setCart(c)}
     onOrderPlaced={(ticket) => setCurrentTicket(ticket)}
     />
