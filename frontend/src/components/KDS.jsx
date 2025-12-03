@@ -23,9 +23,14 @@ export default function KDS({ ticketId }) {
     return () => { mounted = false; clearInterval(timer) }
   }, [ticketId])
 
-  if (!ticketId) {
-    return <div className="bg-white p-4 rounded shadow">No active ticket. Place an order first.</div>
-  }
+if (!ticketId) {
+  return (
+    <div className="p-6 bg-white shadow rounded">
+      <h2 className="text-xl font-bold mb-3">Kitchen Display System</h2>
+      <p className="text-gray-600">No orders yet. Waiting...</p>
+    </div>
+  );
+}
 
   return (
     <div className="bg-white p-6 rounded shadow">
