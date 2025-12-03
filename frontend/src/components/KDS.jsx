@@ -178,20 +178,5 @@ export default function KDS({ ticketId }) {
 
   </div>
 </div>
-
-{/* --- MISMATCH UI --- */}
-{status?.verification?.status === "mismatch" && (
-  <div className="p-4 bg-red-100 border-l-4 border-red-500">
-    <strong>Mismatch detected:</strong>
-    <div>Missing: {status.verification.missing.join(", ")}</div>
-  </div>
-)}
-
-{/* --- MATCH UI --- */}
-{status?.verification?.status === "ok" && (
-  <div className="p-4 bg-green-50 border-l-4 border-green-500">
-    <strong>All items verified. Ready to hand off.</strong>
-  </div>
-)}
-
+    )
 }
