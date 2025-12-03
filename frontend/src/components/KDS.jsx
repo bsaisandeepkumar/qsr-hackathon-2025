@@ -78,10 +78,7 @@ export default function KDS({ ticketId }) {
     <div className="bg-white p-6 rounded shadow">
   <h2 className="text-xl font-medium mb-3">KDS — Ticket {ticketId}</h2>
 
-  <div className="mb-4">
-    <div><strong>Status:</strong> {status?.status || "loading"}</div>
-    <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}</div>
-  </div>
+
 
   {/* --- AI CAMERA VERIFICATION --- */}
   <h3 className="text-lg font-semibold mt-6 mb-3">AI Camera Verification</h3>
@@ -93,8 +90,10 @@ export default function KDS({ ticketId }) {
   <h2 className="text-xl font-semibold mb-2">Station 1</h2>
 
   <p className="text-sm">Ticket:</p>
-  <p className="text-sm">Status: in_kitchen</p>
-  <p className="text-sm mb-3">Verification: pending</p>
+  <div className="mb-4">
+    <div><strong>Status:</strong> {status?.status || "loading"}</div>
+    <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}</div>
+  </div>
 
   <img
     src="/station1.png"
