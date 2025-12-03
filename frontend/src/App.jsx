@@ -55,7 +55,6 @@ export default function App() {
 
         {view === "kiosk" && (
           <main className="grid grid-cols-3 gap-6">
-
             {/* LEFT COLUMN */}
             <div className="col-span-2">
               <Menu
@@ -72,15 +71,13 @@ export default function App() {
                 user={user}
                 cart={cart}
               />
-
               <CartPanel
                 cart={cart}
-                onCartUpdated={(c) => setCart(c)}
-                onOrderPlaced={(t) => setCurrentTicket(t)}
+                onCartUpdated={setCart}
+                onOrderPlaced={setCurrentTicket}
               />
             </div>
-
-          </main>   {/* ← YES, right place */}
+          </main>
         )}
 
         {view === "kds" && <KDS ticketId={currentTicket?.id} />}
