@@ -91,8 +91,8 @@ export default function KDS({ ticketId }) {
 
   <p className="text-sm">Ticket:</p>
   <div className="mb-4">
-    <div><strong>Status:</strong> {status?.status || "loading"}</div>
-    <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}</div>
+    <div>Status:{status?.status || "loading"}</div>
+    <div>Verification:{status?.verification?.status || "unknown"}</div>
   </div>
 
   <img
