@@ -80,8 +80,8 @@ export default function KDS({ ticketId }) {
 
       <div className="mb-4">
         <div><strong>Status:</strong> {status?.status || "loading"}</div>
-        <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}</div>
-      </div>
+        <div><strong>Verification:</strong> {status?.verification?.status || "unknown"}
+        </div>
 
 {/* --- AI CAMERA VERIFICATION --- */}
 <h3 className="text-lg font-semibold mt-6 mb-3">AI Camera Verification</h3>
