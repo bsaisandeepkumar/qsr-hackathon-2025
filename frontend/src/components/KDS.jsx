@@ -39,6 +39,52 @@ if (!ticketId) {
         <div><strong>Status:</strong> {status?.status || 'loading'}</div>
         <div><strong>Verification:</strong> {status?.verification?.status || 'unknown'}</div>
       </div>
+      <div className="p-4 bg-white rounded shadow mb-6">
+  <h2 className="text-lg font-semibold mb-3">AI Camera Verification</h2>
+
+  {/* Fake Live Camera Feed */}
+  <div className="bg-black rounded overflow-hidden shadow mb-4">
+    <img 
+      src="/camera-feed.gif"
+      alt="Camera simulation"
+      className="w-full h-48 object-cover"
+    />
+    <div className="px-3 py-2 bg-gray-800 text-white text-sm">
+      AI Camera — Station 3
+    </div>
+  </div>
+
+  {/* Demo Buttons */}
+  <div className="grid grid-cols-2 gap-2">
+    <button 
+      onClick={() => runScenario("ok")}
+      className="bg-green-600 text-white py-2 rounded"
+    >
+      ✔ Items Match
+    </button>
+
+    <button 
+      onClick={() => runScenario("fries_missing")}
+      className="bg-yellow-500 text-white py-2 rounded"
+    >
+      ⚠ Fries Missing
+    </button>
+
+    <button 
+      onClick={() => runScenario("drink_missing")}
+      className="bg-yellow-500 text-white py-2 rounded"
+    >
+      ⚠ Drink Missing
+    </button>
+
+    <button 
+      onClick={() => runScenario("extra")}
+      className="bg-purple-600 text-white py-2 rounded"
+    >
+      ➕ Extra Item
+    </button>
+  </div>
+</div>
 
       {status?.verification?.status === 'mismatch' && (
         <div className="p-4 bg-red-100 border-l-4 border-red-500">
