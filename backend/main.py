@@ -152,7 +152,23 @@ def set_ticket_status(ticket_id: int, status: str):
     conn.commit()
     conn.close()
 
+def get_ticket_details(ticket_id: int):
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    cur.execute("SELECT id, items, status FROM tickets WHERE id = ?", (ticket_id,))
+    row = cur.fetchone()
+    conn.close()
 
+    if not row:
+        return {"ticket": None}
+
+    return {
+        "ticket": {
+            "id": row[0],
+            "items": json.loads(row[1]),
+            "status": row[2]
+        }
+    }
 # ---------------------------
 # Endpoints
 # ---------------------------
@@ -401,3 +417,7 @@ async def verify(
         json.dump(result, f)
 
     return result
+
+    @app.get("/ticket/{ticket_id}")
+def api_get_ticket(ticket_id: int):
+    return get_ticket_details(ticket_id)
