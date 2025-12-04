@@ -33,6 +33,24 @@ export default function KDS({ ticketId }) {
 
     setStatus(mock);
   };
+
+  export default function KDS({ ticketId }) {
+  const [ticket, setTicket] = useState(null);
+
+  useEffect(() => {
+    if (!ticketId) return;
+    fetchTicket(ticketId);
+  }, [ticketId]);
+
+  const fetchTicket = async (id) => {
+    try {
+      const res = await fetch(`${config.API_BASE_URL}/ticket/${id}`);
+      const data = await res.json();
+      setTicket(data.ticket);
+    } catch (err) {
+      console.error("Failed loading ticket", err);
+    }
+  };
   // --------------------------------------------------
 
 
@@ -76,7 +94,45 @@ export default function KDS({ ticketId }) {
 
   return (
     <div className="bg-white p-6 rounded shadow">
-  <h2 className="text-xl font-medium mb-3">KDS — Ticket {ticketId}</h2>
+      <h2 className="text-xl font-medium mb-3">
+        KDS — Ticket {ticketId}
+      </h2>
+
+      {!ticket ? (
+        <p className="text-gray-500">Loading ticket details...</p>
+      ) : (
+        <div>
+          {/* ORDER ITEMS LIST */}
+          <h3 className="font-semibold mb-2">Items in Order</h3>
+          <ul className="list-disc ml-5 mb-4">
+            {ticket.items.map((item, idx) => (
+              <li key={idx}>{item.name}</li>
+            ))}
+          </ul>
+
+          {/* STATUS */}
+          <p>
+            <strong>Status:</strong> {ticket.status}
+          </p>
+        </div>
+      )}
+
+      {/* EXISTING CAMERA SECTIONS */}
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        {[1, 2, 3, 4].map((cam) => (
+          <div key={cam} className="bg-gray-100 p-4 rounded shadow">
+            <p className="font-medium mb-2">Camera {cam}</p>
+            <img
+              src="/camera-feed.gif"
+              className="w-full h-48 object-cover rounded"
+              alt="camera"
+            />
+            <p className="text-sm text-gray-600 mt-2">Verification pending...</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
 
 
