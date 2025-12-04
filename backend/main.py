@@ -24,6 +24,35 @@ init_logging()
 log = get_logger("backend")
 init_db()
 
+# Add profiles for demo
+def seed_demo_profiles():
+    seed_data = [
+        ("7041231234", "Veg Lover", "profile_veg"),
+        ("7041212121", "Fitness Focus", "profile_fitness"),
+        ("7041313131", "Kids Friendly", "profile_kids"),
+    ]
+
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+
+    for phone, name, profile in seed_data:
+        cur.execute(
+            """
+            INSERT OR IGNORE INTO users (phone, name, profile)
+            VALUES (?, ?, ?)
+            """,
+            (phone, name, profile)
+        )
+
+    conn.commit()
+    conn.close()
+
+
+# call immediately when app starts
+seed_demo_profiles()
+
+
+
 app = FastAPI(title="SmartServe Backend (Hackathon Demo)")
 app.add_middleware(CorrelationIdMiddleware)
 
