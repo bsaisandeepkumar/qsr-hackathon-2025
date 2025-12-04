@@ -348,15 +348,3 @@ async def verify(
         json.dump(result, f)
 
     return result
-
-@app.get("/debug/users")
-def list_users():
-    conn = sqlite3.connect(DB_FILE)
-    cur = conn.cursor()
-    cur.execute("SELECT phone, name, profile, created_at FROM users")
-    rows = cur.fetchall()
-    conn.close()
-    return [
-        {"phone": r[0], "name": r[1], "profile": r[2], "created_at": r[3]}
-        for r in rows
-    ]
