@@ -94,7 +94,7 @@ export default function KDS({ ticketId }) {
 <p className="text-sm">Verification: {status?.verification?.status || "unknown"}</p>
 
   <img
-    src="/station1.png"
+    src="/camera-feed_1.jpg"
     alt="Station 1 Camera"
     className="w-full h-auto rounded-md mb-3"
   />
@@ -114,7 +114,7 @@ export default function KDS({ ticketId }) {
   <p className="text-sm mb-3">Verification: Completed</p>
 
   <img
-    src="/station2.png"
+    src="/camera-feed_2.png"
     alt="Station 2 Camera"
     className="w-full h-auto rounded-md mb-3"
   />
@@ -133,7 +133,7 @@ export default function KDS({ ticketId }) {
   <p className="text-sm mb-3">Verification: Completed</p>
 
   <img
-    src="/station3.png"
+    src="/camera-feed_3.png"
     alt="Station 3 Camera"
     className="w-full h-auto rounded-md mb-3"
   />
@@ -153,7 +153,7 @@ export default function KDS({ ticketId }) {
   <p className="text-sm mb-3">Verification: Completed</p>
 
   <img
-    src="/station4.png"
+    src="/camera-feed_4.png"
     alt="Station 4 Camera"
     className="w-full h-auto rounded-md mb-3"
   />
