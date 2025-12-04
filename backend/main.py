@@ -418,6 +418,6 @@ async def verify(
 
     return result
 
-    @app.get("/ticket/{ticket_id}")
+@app.get("/ticket/{ticket_id}")
 def api_get_ticket(ticket_id: int):
     return get_ticket_details(ticket_id)
