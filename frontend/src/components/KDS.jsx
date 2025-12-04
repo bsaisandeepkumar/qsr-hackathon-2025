@@ -91,6 +91,17 @@ export default function KDS({ ticketId }) {
   return (
     <div className="bg-white p-6 rounded shadow">
       <h2 className="text-xl font-medium mb-3">KDS — Ticket {ticketId}</h2>
+{/* -------- ORDERED ITEMS -------- */}
+{ticket && (
+  <div className="mt-4 p-4 bg-gray-50 rounded-lg border">
+    <h3 className="text-lg font-semibold mb-2">Ordered Items</h3>
+    <ul className="list-disc ml-5 text-sm">
+      {ticket.items.map((item, idx) => (
+        <li key={idx}>{item}</li>
+      ))}
+    </ul>
+  </div>
+)}
 
       {/* -------- AI CAMERA VERIFICATION -------- */}
       <h3 className="text-lg font-semibold mt-6 mb-3">
