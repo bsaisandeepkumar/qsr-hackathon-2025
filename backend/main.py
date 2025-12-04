@@ -401,3 +401,22 @@ async def verify(
         json.dump(result, f)
 
     return result
+    
+@app.get("/ticket/{ticket_id}")
+def get_ticket_details(ticket_id: int):
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    cur.execute("SELECT id, items, status FROM tickets WHERE id = ?", (ticket_id,))
+    row = cur.fetchone()
+    conn.close()
+
+    if not row:
+        return {"ticket": None}
+
+    return {
+        "ticket": {
+            "id": row[0],
+            "items": json.loads(row[1]),
+            "status": row[2]
+        }
+    }
