@@ -92,7 +92,7 @@ export default function KDS({ ticketId }) {
     <div className="bg-white p-6 rounded shadow">
       <h2 className="text-xl font-medium mb-3">KDS — Ticket {ticketId}</h2>
 {/* -------- ORDERED ITEMS -------- */}
-{ticket && (
+{ticket?.items?.length > 0 && (
   <div className="mt-4 p-4 bg-gray-50 rounded-lg border">
     <h3 className="text-lg font-semibold mb-2">Ordered Items</h3>
     <ul className="list-disc ml-5 text-sm">
