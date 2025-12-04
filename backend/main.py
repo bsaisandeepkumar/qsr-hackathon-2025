@@ -245,30 +245,54 @@ async def recommend(req: RecommendRequest, request: Request):
         extra={"correlation_id": request.state.correlation_id},
     )
 
-    # 🔥 Hard-coded demo recommendations
-    STATIC_RECS = {
-        "in_store": [
-            {"id": "fries", "name": "Crispy Fries", "reason": "Popular add-on"},
-            {"id": "cola", "name": "Soft Drink", "reason": "Combo saver"},
-            {"id": "icecream", "name": "Vanilla Ice Cream", "reason": "Top dessert pick"},
+    # -----------------------------------------
+    # DEMO HARDCODED PROFILE LOGIC
+    # -----------------------------------------
+    demo_recs = {
+        "profile_veg": [
+            {"id": "salad", "name": "Fresh Garden Salad", "reason": "Veg-friendly choice"},
+            {"id": "veggie_burger", "name": "Veggie Burger", "reason": "Popular veg item"},
+            {"id": "smoothie", "name": "Green Smoothie", "reason": "Healthy vegetarian drink"}
         ],
-        "returning": [
-            {"id": "burger", "name": "Classic Burger", "reason": "Your go-to favorite"},
-            {"id": "fries", "name": "Fries", "reason": "Pairs well with your order"},
-            {"id": "coffee", "name": "Hot Coffee", "reason": "Recommended this time of day"},
+        "profile_fitness": [
+            {"id": "protein_bowl", "name": "High-Protein Bowl", "reason": "Fitness-focused energy"},
+            {"id": "grilled_chicken", "name": "Grilled Chicken", "reason": "Lean protein"},
+            {"id": "energy_smoothie", "name": "Energy Smoothie", "reason": "Workout booster"}
         ],
-        "health_focus": [
-            {"id": "salad", "name": "Green Salad", "reason": "Low-calorie choice"},
-            {"id": "soup", "name": "Tomato Soup", "reason": "Light & healthy"},
-            {"id": "juice", "name": "Fresh Juice", "reason": "No added sugar"},
-        ]
+        "profile_kids": [
+            {"id": "kids_meal", "name": "Kids Meal Combo", "reason": "Child-friendly portion"},
+            {"id": "ice_cream", "name": "Chocolate Ice Cream", "reason": "Kids favorite"},
+            {"id": "fries", "name": "Fries", "reason": "Popular with kids"}
+        ],
     }
 
-    # default if unknown profile
-    recs = STATIC_RECS.get(req.profile, STATIC_RECS["in_store"])
+    # if profile matches demo profiles → return hardcoded recs
+    if req.profile in demo_recs:
+        log.info(
+            f"Demo profile detected. Returning preset recs.",
+            extra={"correlation_id": request.state.correlation_id},
+        )
+        return {"recommendations": demo_recs[req.profile]}
+
+    # -----------------------------------------
+    # FALLBACK TO ORIGINAL ML RECOMMENDER
+    # -----------------------------------------
+    context_items = []
+    if req.ticketId:
+        ticket = get_ticket(req.ticketId)
+        if ticket:
+            context_items = ticket["items"]
+
+    recs = get_recommendations_vector(
+        user=req.user,
+        profile=req.profile,
+        timestamp=req.time,
+        context_ticket_items=context_items,
+        top_k=3
+    )
 
     log.info(
-        f"Static demo recommendation result={recs}",
+        f"Recommendation result={recs}",
         extra={"correlation_id": request.state.correlation_id},
     )
 
